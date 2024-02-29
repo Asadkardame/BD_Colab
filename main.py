@@ -30,6 +30,7 @@ def hello_spark():
 if __name__ == "__main__":
     print("Hello Spark!!")
     hello_spark()
+    print("Update at 20:41 at 29-Feb-24")
 
 # Stop SparkSession
 spark.stop()
