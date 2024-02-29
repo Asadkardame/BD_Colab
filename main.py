@@ -21,12 +21,15 @@ def hello_spark():
     # Show DataFrame
     df.show()
 
-    # # Stop SparkSession
+    
 
     
 
-spark.stop()
+
 
 if __name__ == "__main__":
     print("Hello Spark!!")
     hello_spark()
+
+# Stop SparkSession
+spark.stop()
