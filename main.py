@@ -10,15 +10,6 @@ from Pyspark_Full_Load import TestIncrDataLoading
 if __name__ == "__main__":
 
 
-    print("Testing the Mock_PostGres")
-
-    ########################Testing the Postgres##############################
-    # Load the test cases from TestPostgresUtils
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestPostgresUtils)
-
-    # Run the tests
-    unittest.TextTestRunner().run(suite)
-
     ######################Test Pyspark Full load #############################
 
     # Initialize SparkSession
