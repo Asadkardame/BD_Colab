@@ -1,7 +1,7 @@
 import unittest
 from pyspark.sql import SparkSession
 
-class TestDataLoading(unittest.TestCase):
+class TestFullDataLoading(unittest.TestCase):
     def setUp(self):
         # Initialize SparkSession
         self.spark = SparkSession.builder \
