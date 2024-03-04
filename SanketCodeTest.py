@@ -28,6 +28,7 @@ class TestDataLoading(unittest.TestCase):
         postgres_table_name = "health_insurance"
         df_postgres = self.spark.read.jdbc(url=postgres_url, table=postgres_table_name, properties=postgres_properties)
         df_postgres.show()
+        expected_count = df_postgres.count()
 
         # Perform data loading to Hive
         hive_database_name = "sanket_db"
