@@ -1,0 +1,25 @@
+import org.apache.spark.sql.{DataFrame, SparkSession}
+
+object DataPipeline {
+  def readJsonData(spark: SparkSession, url: String): DataFrame = {
+    val result = scala.io.Source.fromURL(url).mkString
+    spark.read.json(Seq(result).toDS)
+  }
+
+  // Function to write data to Kafka
+  def writeToKafka(dataFrame: DataFrame, kafkaServers: String, topic: String): Unit = {
+    dataFrame.selectExpr("to_json(struct(*)) AS value")
+      .write
+      .format("kafka")
+      .option("kafka.bootstrap.servers", kafkaServers)
+      .option("topic", topic)
+      .save()
+  }
+
+  // Function to generate unique row key
+  def generateUniqueRowKey(message: String): String = {
+    val currentTime = System.currentTimeMillis()
+    val messageHash = message.hashCode
+    s"$currentTime-$messageHash"
+  }
+}
