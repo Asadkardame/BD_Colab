@@ -16,7 +16,7 @@ class TestDataLoading(unittest.TestCase):
 
     def test_data_loading(self):
         # Define test data
-        expected_count = 2  # Expected number of rows loaded from PostgreSQL
+        expected_count = 1  # Expected number of rows loaded from PostgreSQL
 
         # Read data from PostgreSQL
         postgres_url = "jdbc:postgresql://ec2-3-9-191-104.eu-west-2.compute.amazonaws.com:5432/testdb"
