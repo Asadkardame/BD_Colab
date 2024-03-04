@@ -5,7 +5,7 @@ import unittest
 
 from pyspark.sql import SparkSession
 from Pyspark_Full_Load import TestFullDataLoading
-from Pyspark_Full_Load import TestIncrDataLoading
+from Pyspark_Incr_Load import TestIncrDataLoading
 
 if __name__ == "__main__":
 
