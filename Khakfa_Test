@@ -1,25 +1,31 @@
-import org.apache.spark.sql.{DataFrame, SparkSession}
+import org.apache.spark.sql.SparkSession
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.BeforeAndAfter
 
-object DataPipeline {
-  def readJsonData(spark: SparkSession, url: String): DataFrame = {
-    val result = scala.io.Source.fromURL(url).mkString
-    spark.read.json(Seq(result).toDS)
+class DataPipelineTest extends AnyFunSuite with BeforeAndAfter {
+  var spark: SparkSession = _
+
+  before {
+    spark = SparkSession.builder().appName("DataPipelineTest").master("local[2]").getOrCreate()
   }
 
-  // Function to write data to Kafka
-  def writeToKafka(dataFrame: DataFrame, kafkaServers: String, topic: String): Unit = {
-    dataFrame.selectExpr("to_json(struct(*)) AS value")
-      .write
-      .format("kafka")
-      .option("kafka.bootstrap.servers", kafkaServers)
-      .option("topic", topic)
-      .save()
+  after {
+    if (spark != null) {
+      spark.stop()
+    }
   }
 
-  // Function to generate unique row key
-  def generateUniqueRowKey(message: String): String = {
-    val currentTime = System.currentTimeMillis()
-    val messageHash = message.hashCode
-    s"$currentTime-$messageHash"
+  test("Test readJsonData function") {
+    val url = "http://18.133.73.36:5001/insurance_claims1"
+    val df = DataPipeline.readJsonData(spark, url)
+    assert(df.count() > 0)
+    // Add more assertions as needed
+  }
+
+  test("Test generateUniqueRowKey function") {
+    val message = "test message"
+    val rowKey = DataPipeline.generateUniqueRowKey(message)
+    assert(rowKey.nonEmpty)
+    // Add more assertions as needed
   }
 }
