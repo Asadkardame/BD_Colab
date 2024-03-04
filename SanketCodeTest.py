@@ -31,10 +31,10 @@ class TestDataLoading(unittest.TestCase):
         # Perform data loading to Hive
         hive_database_name = "sanket_db"
         hive_table_name = "health_insurance"
-        df_postgres.write.mode('overwrite').saveAsTable(f"{sanket_db}.{health_insurance}")
+        df_postgres.write.mode('overwrite').saveAsTable("sanket_db.health_insurance")
 
         # Read Hive table
-        df_hive = self.spark.read.table(f"{sanket_db}.{health_insurance}")
+        df_hive = self.spark.read.table("sanket_db.health_insurance")
 
         # Verify the number of rows loaded to Hive
         actual_count = df_hive.count()
