@@ -1,7 +1,7 @@
 
 
 import unittest
-from Mock_PostGres import TestPostgresUtils
+
 
 from pyspark.sql import SparkSession
 from Pyspark_Full_Load import TestFullDataLoading
