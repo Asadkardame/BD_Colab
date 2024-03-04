@@ -1,5 +1,9 @@
 import unittest
-from unittest.mock import MagicMock, patch
+
+try:
+    from unittest.mock import MagicMock, patch
+except ImportError:
+    from mock import MagicMock, patch
 
 def connect_to_postgres(dbname, user, password, host, port):
     # Simulate connection to PostgreSQL
