@@ -8,7 +8,6 @@ class TestDataLoading(unittest.TestCase):
             .appName("TestDataLoading") \
             .master("local[2]") \
             .enableHiveSupport() \
-            .config("spark.driver.extraClassPath", "/path/to/postgresql-driver.jar") \ # Replace '/path/to/postgresql-driver.jar' with the actual path to the PostgreSQL JDBC driver JAR file
             .getOrCreate()
 
     def tearDown(self):
