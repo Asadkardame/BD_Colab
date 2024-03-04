@@ -35,7 +35,7 @@ class TestDataLoading(unittest.TestCase):
 
         # Read Hive table
         df_hive = self.spark.read.table("sanket_db.health_insurance")
-
+        df_hive.show()
         # Verify the number of rows loaded to Hive
         actual_count = df_hive.count()
         self.assertEqual(actual_count, expected_count, "Number of rows loaded to Hive does not match expected count")
