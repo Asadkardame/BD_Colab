@@ -29,14 +29,14 @@ class TestIncrDataLoading(unittest.TestCase):
             "driver": "org.postgresql.Driver",
         }
         postgres_table_name = "health_insurance"
-        where_condition = "BeneID = 'BENE177334'"
-        # df_postgres = self.spark.read.jdbc(url=postgres_url, table=postgres_table_name, properties=postgres_properties)
-        df_postgres = self.spark.read.jdbc(url=postgres_url, table=postgres_table_name, properties=postgres_properties,
-                                    column=None,  # Specify None for column
-                                    lowerBound=None,  # Specify None for lowerBound
-                                    upperBound=None,  # Specify None for upperBound
-                                    numPartitions=None,  # Specify None for numPartitions
-                                    predicates=[where_condition])  # Use predicates parameter for WHERE condition
+        # where_condition = "BeneID = 'BENE177334'"
+        df_postgres = self.spark.read.jdbc(url=postgres_url, table=postgres_table_name, properties=postgres_properties)
+        # df_postgres = self.spark.read.jdbc(url=postgres_url, table=postgres_table_name, properties=postgres_properties,
+        #                             column=None,  # Specify None for column
+        #                             lowerBound=None,  # Specify None for lowerBound
+        #                             upperBound=None,  # Specify None for upperBound
+        #                             numPartitions=None,  # Specify None for numPartitions
+        #                             predicates=[where_condition])  # Use predicates parameter for WHERE condition
 
         # Perform data loading to Hive
         df_postgres.write.mode('overwrite').saveAsTable("sanket_db.health_insurance")
