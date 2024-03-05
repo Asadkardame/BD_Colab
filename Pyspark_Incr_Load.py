@@ -33,7 +33,7 @@ class TestIncrDataLoading(unittest.TestCase):
 
         # Perform data loading to Hive
         df_postgres.write.mode('append').saveAsTable("sanket_db.health_insurance")
-
+        df_postgres.show()
         # Read count of rows from Hive table after incremental load
         updated_count_df = self.spark.sql("SELECT COUNT(*) AS count FROM sanket_db.health_insurance")
         updated_count = updated_count_df.collect()[0]["count"]
