@@ -16,7 +16,7 @@ class TestIncrDataLoading(unittest.TestCase):
 
     def test_incremental_load(self):
         # Read existing data from Hive table
-        existing_data = self.spark.sql(f"SELECT * FROM sanket_db.health_insurance")
+        existing_data = self.spark.sql("SELECT * FROM sanket_db.health_insurance")
 
         # Read new data from PostgreSQL
         postgres_url = "jdbc:postgresql://ec2-3-9-191-104.eu-west-2.compute.amazonaws.com:5432/testdb"
@@ -39,7 +39,7 @@ class TestIncrDataLoading(unittest.TestCase):
             print("No new rows to insert.")
         
         # Verify the number of rows loaded to Hive
-        updated_count_df = self.spark.sql(f"SELECT COUNT(*) AS count FROM sanket_db.health_insurance")
+        updated_count_df = self.spark.sql("SELECT COUNT(*) AS count FROM sanket_db.health_insurance")
         updated_count = updated_count_df.collect()[0]["count"]
         expected_count = existing_data.count() + new_rows.count()
         self.assertEqual(updated_count, expected_count, "Number of rows loaded to Hive after incremental load does not match expected count")
