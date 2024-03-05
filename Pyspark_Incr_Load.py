@@ -32,7 +32,7 @@ class TestIncrDataLoading(unittest.TestCase):
         df_postgres = self.spark.read.jdbc(url=postgres_url, table=postgres_table_name, properties=postgres_properties)
 
         # Perform data loading to Hive
-        df_postgres.write.mode('append').saveAsTable("sanket_db.health_insurance")
+        df_postgres.write.mode('overwrite').saveAsTable("sanket_db.health_insurance")
         # df_postgres.show()
         
         # Read count of rows from Hive table after incremental load
