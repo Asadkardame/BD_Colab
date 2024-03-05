@@ -42,6 +42,8 @@ class TestIncrDataLoading(unittest.TestCase):
         updated_count_df = self.spark.sql("SELECT COUNT(*) AS count FROM sanket_db.health_insurance")
         updated_count = updated_count_df.collect()[0]["count"]
         expected_count = existing_data.count() + new_rows.count()
+        print(updated_count)
+        print(expected_count)
         self.assertEqual(updated_count, expected_count, "Number of rows loaded to Hive after incremental load does not match expected count")
 
 if __name__ == '__main__':
