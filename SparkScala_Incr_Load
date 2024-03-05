@@ -1,7 +1,7 @@
 package scalatest;
 import org.apache.spark.sql.SparkSession
 
-object SparkScala_Incr_load {
+object IncrLoad {
   def main(args: Array[String]): Unit = {
     // Create SparkSession
     val spark = SparkSession.builder()
@@ -25,6 +25,7 @@ object SparkScala_Incr_load {
 
       // Identify new rows by performing a left anti join
       val incrementalData = newData.join(existingData, newData.columns, "left_anti")
+      incrementalData.show()
 
       if (incrementalData.isEmpty) {
         println("No new data to load. Incremental load test passed.")
