@@ -30,6 +30,7 @@ class TestIncrDataLoading(unittest.TestCase):
 
         # Identify new rows
         new_rows = new_data.join(existing_data, new_data.columns, "left_anti")
+        new_rows.show()
 
         # Append new rows to Hive table
         if not new_rows.rdd.isEmpty():
