@@ -32,7 +32,7 @@ class TestIncrDataLoading(unittest.TestCase):
         new_rows = new_data.join(existing_data, new_data.columns, "left_anti")
 
         # Append new rows to Hive table
-        if not new_rows.isEmpty():
+        if not new_rows.rdd.isEmpty():
             new_rows.write.mode('append').saveAsTable('sanket_db.health_insurance')
             print("New rows inserted into Hive for incremental load.")
         else:
