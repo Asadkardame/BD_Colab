@@ -18,7 +18,7 @@ class TestIncrDataLoading(unittest.TestCase):
         # Read initial count of rows from Hive table
         hive_database_name = "sanket_db"
         hive_table_name = "health_insurance"
-        initial_count_df = self.spark.sql(f"SELECT COUNT(*) AS count FROM {hive_database_name}.{hive_table_name}")
+        initial_count_df = self.spark.sql("SELECT COUNT(*) AS count FROM sanket_db.health_insurance")
         initial_count = initial_count_df.collect()[0]["count"]
 
         try:
