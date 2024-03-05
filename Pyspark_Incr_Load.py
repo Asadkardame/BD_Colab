@@ -44,6 +44,9 @@ class TestIncrDataLoading(unittest.TestCase):
         expected_count = initial_count + df_postgres.count()
         count = df_postgres.count()
         print("Count of df_postgres:", count)
+        print("Count of initial:", initial_count)
+        print("Count of updated_count:", updated_count)
+
 
         
         # Verify the number of rows loaded to Hive
