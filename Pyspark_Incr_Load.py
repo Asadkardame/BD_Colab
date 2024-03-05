@@ -43,7 +43,7 @@ class TestIncrDataLoading(unittest.TestCase):
         # df_postgres.count.show()
         expected_count = initial_count + df_postgres.count()
         post_gres_count = df_postgres.count()
-        print("Count of df_postgres:", count)
+        print("Count of df_postgres:", post_gres_count)
         print("Count of initial:", initial_count)
         print("Count of updated_count:", updated_count)
 
