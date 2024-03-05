@@ -16,9 +16,7 @@ class TestIncrDataLoading(unittest.TestCase):
 
     def test_incremental_load(self):
         # Read existing data from Hive table
-        hive_database_name = "sanket_db"
-        hive_table_name = "health_insurance"
-        existing_data = self.spark.sql(f"SELECT * FROM {hive_database_name}.{hive_table_name}")
+        existing_data = self.spark.sql(f"SELECT * FROM sanket_db.health_insurance")
 
         # Read new data from PostgreSQL
         postgres_url = "jdbc:postgresql://ec2-3-9-191-104.eu-west-2.compute.amazonaws.com:5432/testdb"
@@ -35,13 +33,13 @@ class TestIncrDataLoading(unittest.TestCase):
 
         # Append new rows to Hive table
         if not new_rows.isEmpty():
-            new_rows.write.mode('append').saveAsTable(f"{hive_database_name}.{hive_table_name}")
+            new_rows.write.mode('append').saveAsTable('sanket_db.health_insurance')
             print("New rows inserted into Hive for incremental load.")
         else:
             print("No new rows to insert.")
         
         # Verify the number of rows loaded to Hive
-        updated_count_df = self.spark.sql(f"SELECT COUNT(*) AS count FROM {hive_database_name}.{hive_table_name}")
+        updated_count_df = self.spark.sql(f"SELECT COUNT(*) AS count FROM sanket_db.health_insurance")
         updated_count = updated_count_df.collect()[0]["count"]
         expected_count = existing_data.count() + new_rows.count()
         self.assertEqual(updated_count, expected_count, "Number of rows loaded to Hive after incremental load does not match expected count")
