@@ -47,7 +47,7 @@ class TestIncrDataLoading(unittest.TestCase):
         print('updated_count', updated_count)
         print('expected_count', expected_count)
         print('New_count', new_rows1)
-        print('New_count', ex_rows1)
+        print('Ex_count', ex_rows1)
         self.assertEqual(updated_count, expected_count, "Number of rows loaded to Hive after incremental load does not match expected count")
 
 if __name__ == '__main__':
