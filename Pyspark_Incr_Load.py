@@ -29,6 +29,7 @@ class TestIncrDataLoading(unittest.TestCase):
             "driver": "org.postgresql.Driver",
         }
         postgres_table_name = "health_insurance"
+        where_condition = "BeneID = 'BENE170334'"
         df_postgres = self.spark.read.jdbc(url=postgres_url, table=postgres_table_name, properties=postgres_properties)
 
         # Perform data loading to Hive
