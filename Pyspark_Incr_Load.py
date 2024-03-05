@@ -29,7 +29,7 @@ class TestIncrDataLoading(unittest.TestCase):
             "driver": "org.postgresql.Driver",
         }
         postgres_table_name = "health_insurance"
-        where_condition = "BeneID = 'BENE170334'"
+        where_condition = "BeneID = 'BENE177334'"
         # df_postgres = self.spark.read.jdbc(url=postgres_url, table=postgres_table_name, properties=postgres_properties)
         df_postgres = self.spark.read.jdbc(url=postgres_url, table=postgres_table_name, properties=postgres_properties, column=where_condition)
 
