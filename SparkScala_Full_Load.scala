@@ -18,8 +18,8 @@ object FullLoadTest {
       val dfPostgres = spark.read.jdbc(postgresUrl, "people", postgresProperties)
 
       // Write test data to a temporary Hive table
-      dfPostgres.write.mode("overwrite").saveAsTable("people")
-      //         dfPostgres.write.mode("overwrite").option("path", "/custom/location/health_insurance").saveAsTable("health_insurance")
+      // dfPostgres.write.mode("overwrite").saveAsTable("people")
+      // dfPostgres.write.mode("overwrite").option("path", "/custom/location/health_insurance").saveAsTable("health_insurance")
 
       // Verify if the test data is loaded into the temporary Hive table
       val hiveDataCount = spark.sql("SELECT COUNT(*) FROM people").collect()(0)(0)
