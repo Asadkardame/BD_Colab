@@ -1,31 +1,41 @@
-import org.apache.spark.sql.SparkSession
-import org.scalatest.funsuite.AnyFunSuite
-import org.scalatest.BeforeAndAfter
+import unittest
+from unittest.mock import patch
+from pyspark.sql import SparkSession
 
-class DataPipelineTest extends AnyFunSuite with BeforeAndAfter {
-  var spark: SparkSession = _
+class TestAPIReadingAndKafkaCreation(unittest.TestCase):
+    def setUp(self):
+        # Initialize SparkSession
+        self.spark = SparkSession.builder \
+            .appName("TestAPIReadingAndKafkaCreation") \
+            .master("local[2]") \
+            .getOrCreate()
 
-  before {
-    spark = SparkSession.builder().appName("DataPipelineTest").master("local[2]").getOrCreate()
-  }
+    def tearDown(self):
+        # Stop SparkSession
+        self.spark.stop()
 
-  after {
-    if (spark != null) {
-      spark.stop()
-    }
-  }
+    @patch('pyspark.sql.DataFrameReader')
+    @patch('pyspark.sql.DataFrameWriter')
+    def test_api_reading_and_kafka_creation(self, mock_df_writer, mock_df_reader):
+        # Mock the API response
+        mock_api_response = [
+            {"id": 1, "name": "John Doe", "age": 30},
+            {"id": 2, "name": "Jane Smith", "age": 35}
+        ]
+        mock_df_reader.return_value.load.return_value = self.spark.createDataFrame(mock_api_response)
 
-  test("Test readJsonData function") {
-    val url = "http://18.133.73.36:5001/insurance_claims1"
-    val df = DataPipeline.readJsonData(spark, url)
-    assert(df.count() > 0)
-    // Add more assertions as needed
-  }
+        # Mock the Kafka creation
+        mock_df_writer_instance = mock_df_writer.return_value
+        mock_df_writer_instance.mode.return_value.save.return_value = None
 
-  test("Test generateUniqueRowKey function") {
-    val message = "test message"
-    val rowKey = DataPipeline.generateUniqueRowKey(message)
-    assert(rowKey.nonEmpty)
-    // Add more assertions as needed
-  }
-}
+        # Call the function to read API and create Kafka topic
+        # Replace the function name and arguments with your actual implementation
+        # For example:
+        # function_to_read_api_and_create_kafka_topic()
+
+        # Verify that the API was read and Kafka topic was created
+        mock_df_reader.assert_called_once()
+        mock_df_writer.assert_called_once()
+
+if __name__ == '__main__':
+    unittest.main()
