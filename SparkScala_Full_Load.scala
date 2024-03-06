@@ -3,21 +3,18 @@ import org.apache.spark.sql.SparkSession
 
 object FullLoadTest {
   def main(args: Array[String]): Unit = {
-    // Create SparkSession for testing
-    val spark: SparkSession = SparkSession.builder()
+      val spark: SparkSession = SparkSession.builder()
       .appName("FullLoadPostgresToHiveTest")
       .master("local[*]")  // Use local mode for testing
-      //.enableHiveSupport()
       .getOrCreate()
 
-    // Define PostgreSQL connection properties for testing
     val postgresUrl = "jdbc:postgresql://ec2-3-9-191-104.eu-west-2.compute.amazonaws.com:5432/testdb"
     val postgresProperties = new java.util.Properties()
     postgresProperties.put("user", "consultants")
     postgresProperties.put("password", "WelcomeItc@2022")
     postgresProperties.put("driver", "org.postgresql.Driver")
     try {
-      // Read test data from PostgreSQL into a DataFrame
+      
       val dfPostgres = spark.read.jdbc(postgresUrl, "people", postgresProperties)
 
       // Write test data to a temporary Hive table
