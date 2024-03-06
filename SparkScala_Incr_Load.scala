@@ -6,7 +6,7 @@ object IncrLoad {
     // Create SparkSession
     val spark = SparkSession.builder()
       .appName("IncrementalLoadTest")
-      .master("local[*]") // Use local mode for testing
+      // .master("local[*]") // Use local mode for testing
       .getOrCreate()
 
     // Define PostgreSQL connection properties
