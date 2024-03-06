@@ -93,7 +93,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>scala_jenkins.Increamentalload</mainClass>
+                            <mainClass>com.example.MyMainClass</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
