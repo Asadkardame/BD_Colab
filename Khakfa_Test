@@ -1,41 +1,50 @@
-import unittest
-from unittest.mock import patch
-from pyspark.sql import SparkSession
+import org.apache.spark.sql.{DataFrame, SparkSession}
+import org.mockito.Mockito._
+import org.scalatest.{BeforeAndAfter, FlatSpec}
+import org.mockito.ArgumentMatchers._
 
-class TestAPIReadingAndKafkaCreation(unittest.TestCase):
-    def setUp(self):
-        # Initialize SparkSession
-        self.spark = SparkSession.builder \
-            .appName("TestAPIReadingAndKafkaCreation") \
-            .master("local[2]") \
-            .getOrCreate()
+class TestAPIReadingAndKafkaCreation extends FlatSpec with BeforeAndAfter {
+  var spark: SparkSession = _
 
-    def tearDown(self):
-        # Stop SparkSession
-        self.spark.stop()
+  before {
+    // Initialize SparkSession
+    spark = SparkSession.builder()
+      .appName("TestAPIReadingAndKafkaCreation")
+      .master("local[2]")
+      .getOrCreate()
+  }
 
-    @patch('pyspark.sql.DataFrameReader')
-    @patch('pyspark.sql.DataFrameWriter')
-    def test_api_reading_and_kafka_creation(self, mock_df_writer, mock_df_reader):
-        # Mock the API response
-        mock_api_response = [
-            {"id": 1, "name": "John Doe", "age": 30},
-            {"id": 2, "name": "Jane Smith", "age": 35}
-        ]
-        mock_df_reader.return_value.load.return_value = self.spark.createDataFrame(mock_api_response)
+  after {
+    // Stop SparkSession
+    spark.stop()
+  }
 
-        # Mock the Kafka creation
-        mock_df_writer_instance = mock_df_writer.return_value
-        mock_df_writer_instance.mode.return_value.save.return_value = None
+  "APIReadingAndKafkaCreation" should "read API and create Kafka topic" in {
+    // Mock the DataFrameReader
+    val mockDataFrameReader = mock(classOf[DataFrameReader])
+    when(spark.read).thenReturn(mockDataFrameReader)
 
-        # Call the function to read API and create Kafka topic
-        # Replace the function name and arguments with your actual implementation
-        # For example:
-        # function_to_read_api_and_create_kafka_topic()
+    // Mock the API response
+    val mockApiResponse = Seq(
+      (1, "John Doe", 30),
+      (2, "Jane Smith", 35)
+    )
+    val mockDataFrame = spark.createDataFrame(mockApiResponse).toDF("id", "name", "age")
+    when(mockDataFrameReader.json("http://18.133.73.36:5001/insurance_claims1")).thenReturn(mockDataFrame)
 
-        # Verify that the API was read and Kafka topic was created
-        mock_df_reader.assert_called_once()
-        mock_df_writer.assert_called_once()
+    // Mock the DataFrameWriter
+    val mockDataFrameWriter = mock(classOf[DataFrameWriter])
+    when(mockDataFrame.write).thenReturn(mockDataFrameWriter)
+    when(mockDataFrameWriter.mode(anyString())).thenReturn(mockDataFrameWriter)
+    when(mockDataFrameWriter.format(anyString())).thenReturn(mockDataFrameWriter)
 
-if __name__ == '__main__':
-    unittest.main()
+    // Call the function to read API and create Kafka topic
+    // Replace the function name and arguments with your actual implementation
+    // For example:
+    // functionToReadAPIAndCreateKafkaTopic()
+
+    // Verify that the API was read and Kafka topic was created
+    verify(mockDataFrameReader).json("http://18.133.73.36:5001/insurance_claims1")
+    verify(mockDataFrameWriter).saveAsTable("kafka_topic")
+  }
+}
