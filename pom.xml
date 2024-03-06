@@ -61,7 +61,6 @@
             <version>${scala.version}</version>
         </dependency>
 
-
     </dependencies>
     <build>
         <plugins>
@@ -93,7 +92,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.example.MyMainClass</mainClass>
+                            <mainClass>scala_jenkins.Increamentalload</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
