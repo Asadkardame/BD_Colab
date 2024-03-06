@@ -61,11 +61,6 @@
             <version>${scala.version}</version>
         </dependency>
 
-	<dependency>
-    	    <groupId>org.apache.htrace</groupId>
-    	    <artifactId>htrace-core</artifactId>
-    	    <version>3.0.4</version>
-	</dependency>
 
     </dependencies>
     <build>
