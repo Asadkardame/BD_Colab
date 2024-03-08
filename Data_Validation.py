@@ -1,4 +1,5 @@
 from pyspark.sql import SparkSession
+from pyspark.sql.functions import count, isnull, when
 
 # Initialize SparkSession
 spark = SparkSession.builder \
