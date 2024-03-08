@@ -40,7 +40,7 @@ class Pyspark_Incr_Load(unittest.TestCase):
 
         whereCondition = "POLICY_NUMBER >= 1"
         # Define the query with the WHERE condition
-        query = f"(SELECT * FROM car_insurance_claims1 WHERE {whereCondition}) AS data"
+        query = s"(SELECT * FROM car_insurance_claims1 WHERE $whereCondition) AS data"
 
         # Read new data from PostgreSQL with the WHERE condition
         newData = spark.read \
@@ -48,11 +48,11 @@ class Pyspark_Incr_Load(unittest.TestCase):
 
 
         # Perform data loading to Hive
-        df_postgres.write.mode('overwrite').saveAsTable("sanket_db.health_insurance")
+        df_postgres.write.mode('overwrite').saveAsTable("carinsuranceclaims")
         # df_postgres.show()
         
         # Read count of rows from Hive table after incremental load
-        updated_count_df = self.spark.sql("SELECT COUNT(*) AS count FROM sanket_db.health_insurance")
+        updated_count_df = self.spark.sql("SELECT COUNT(*) AS count FROM carinsuranceclaims")
         updated_count = updated_count_df.collect()[0]["count"]
 
         # Compute expected count
