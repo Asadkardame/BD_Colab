@@ -1,7 +1,7 @@
 def test_incremental_load(self):
     # Read initial count of rows from Hive table
-    hive_database_name = "sanket_db"
-    hive_table_name = "health_insurance"
+    hive_database_name = "project1db"
+    hive_table_name = "carinsuranceclaims"
     # initial_count_df = self.spark.sql(f"SELECT COUNT(*) AS count FROM project1db.carinsuranceclaims")
     initial_count_df = self.spark.sql("SELECT COUNT(*) AS count FROM project1db.carinsuranceclaims")
 
