@@ -40,7 +40,7 @@ class TestFullDataLoading(unittest.TestCase):
         newData.show()
 
         # Perform data loading to Hive
-        newData.write.mode('overwrite').saveAsTable("project1db.carinsuranceclaims")
+        newData.write.mode('append').saveAsTable("project1db.carinsuranceclaims")
         
         # Read count of rows from Hive table after incremental load
         updated_count_df = self.spark.sql("SELECT COUNT(*) AS count FROM project1db.carinsuranceclaims")
