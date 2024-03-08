@@ -28,15 +28,24 @@ class TestIncrDataLoading(unittest.TestCase):
             "password": "WelcomeItc@2022",
             "driver": "org.postgresql.Driver",
         }
-        postgres_table_name = "health_insurance"
-        # where_condition = "BeneID = 'BENE177334'"
-        df_postgres = self.spark.read.jdbc(url=postgres_url, table=postgres_table_name, properties=postgres_properties)
-        # df_postgres = self.spark.read.jdbc(url=postgres_url, table=postgres_table_name, properties=postgres_properties,
-        #                             column=None,  # Specify None for column
-        #                             lowerBound=None,  # Specify None for lowerBound
-        #                             upperBound=None,  # Specify None for upperBound
-        #                             numPartitions=None,  # Specify None for numPartitions
-        #                             predicates=[where_condition])  # Use predicates parameter for WHERE condition
+        # postgres_table_name = "health_insurance"
+        # # where_condition = "BeneID = 'BENE177334'"
+        # df_postgres = self.spark.read.jdbc(url=postgres_url, table=postgres_table_name, properties=postgres_properties)
+        # # df_postgres = self.spark.read.jdbc(url=postgres_url, table=postgres_table_name, properties=postgres_properties,
+        # #                             column=None,  # Specify None for column
+        # #                             lowerBound=None,  # Specify None for lowerBound
+        # #                             upperBound=None,  # Specify None for upperBound
+        # #                             numPartitions=None,  # Specify None for numPartitions
+        # #                             predicates=[where_condition])  # Use predicates parameter for WHERE condition
+
+        whereCondition = "POLICY_NUMBER >= 1"
+        # Define the query with the WHERE condition
+        query = f"(SELECT * FROM car_insurance_claims1 WHERE {whereCondition}) AS data"
+
+        # Read new data from PostgreSQL with the WHERE condition
+        newData = spark.read \
+        .jdbc(postgresUrl, query, properties=postgresProperties)
+
 
         # Perform data loading to Hive
         df_postgres.write.mode('overwrite').saveAsTable("sanket_db.health_insurance")
