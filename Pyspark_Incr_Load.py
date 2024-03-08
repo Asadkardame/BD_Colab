@@ -39,3 +39,6 @@ def Pyspark_Incr_Load(self):
 
     # Verify the number of rows loaded to Hive
     self.assertEqual(updated_count, expected_count, "Number of rows loaded to Hive after incremental load does not match expected count")
+
+if __name__ == '__main__':
+    unittest.main()
