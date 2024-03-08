@@ -1,6 +1,18 @@
 import unittest
 from pyspark.sql import SparkSession
-def Pyspark_Incr_Load(self):
+class TestFullDataLoading(unittest.TestCase):
+    def setUp(self):
+        # Initialize SparkSession
+        self.spark = SparkSession.builder \
+            .appName("TestDataLoading") \
+            .master("local[2]") \
+            .enableHiveSupport() \
+            .getOrCreate()
+
+    def tearDown(self):
+        # Stop SparkSession
+        self.spark.stop()
+def testIncrLoad(self):
     # Read initial count of rows from Hive table
     hive_database_name = "project1db"
     hive_table_name = "carinsuranceclaims"
