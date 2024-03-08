@@ -32,7 +32,7 @@ class TestFullDataLoading(unittest.TestCase):
         }
         whereCondition = "POLICY_NUMBER = 3"
         # Define the query with the WHERE condition
-        query = "(SELECT * FROM car_insurance_claims1 WHERE " + whereCondition + ") AS data"
+        query = "(SELECT * FROM public.car_insurance_claims1 WHERE " + whereCondition + ") AS data"
         print("Generated SQL query:", query)
 
         # Read new data from PostgreSQL with the WHERE condition
