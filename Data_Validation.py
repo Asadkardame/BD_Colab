@@ -42,8 +42,6 @@ columns_to_check_uniqueness = ['INCOME', 'GENDER']
 unique_values_specific_columns = {col_name: df.select(col_name).distinct().count() for col_name in columns_to_check_uniqueness}
 print("Unique Values in Specific Columns:", unique_values_specific_columns)
 
-# Stop SparkSession
-spark.stop()
 
 # Check for uniqueness
 unique_rows = df.distinct().count()
