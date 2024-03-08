@@ -1,4 +1,4 @@
-def test_incremental_load(self):
+def test_Pyspark_Incr_Load(self):
     # Read initial count of rows from Hive table
     hive_database_name = "project1db"
     hive_table_name = "carinsuranceclaims"
