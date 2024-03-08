@@ -14,7 +14,7 @@ def test_incremental_load(self):
         "password": "WelcomeItc@2022",
         "driver": "org.postgresql.Driver",
     }
-    whereCondition = "POLICY_NUMBER = 494945573"
+    whereCondition = "POLICY_NUMBER = 3"
     # Define the query with the WHERE condition
     # query = f"(SELECT * FROM car_insurance_claims1 WHERE {whereCondition}) AS data"
     query = "(SELECT * FROM car_insurance_claims1 WHERE " + whereCondition + ") AS data"
