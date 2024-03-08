@@ -22,7 +22,7 @@ def test_incremental_load(self):
 
     # Read new data from PostgreSQL with the WHERE condition
     newData = self.spark.read.jdbc(postgres_url, query, properties=postgres_properties)
-
+    newData.show()
     # Perform data loading to Hive
     newData.write.mode('overwrite').saveAsTable("project1db.carinsuranceclaims")
     
