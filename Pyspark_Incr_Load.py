@@ -12,7 +12,7 @@ class TestFullDataLoading(unittest.TestCase):
     def tearDown(self):
         # Stop SparkSession
         self.spark.stop()
-def testIncrLoad(self):
+def test_Incr_Load(self):
     # Read initial count of rows from Hive table
     hive_database_name = "project1db"
     hive_table_name = "carinsuranceclaims"
