@@ -5,6 +5,13 @@ spark = SparkSession.builder \
     .appName("Incremental Data Validation") \
     .enableHiveSupport() \
     .getOrCreate()
+# Configure JDBC connection properties
+postgres_url = "jdbc:postgresql://ec2-3-9-191-104.eu-west-2.compute.amazonaws.com:5432/testdb"
+postgres_properties = {
+    "user": "consultants",
+    "password": "WelcomeItc@2022",
+    "driver": "org.postgresql.Driver",
+}
 
 # Read new data from data source into a DataFrame (e.g., PostgreSQL)
 new_data_df = spark.read.jdbc(postgres_url, "select * from car_insurance_claims", properties=postgres_properties)
