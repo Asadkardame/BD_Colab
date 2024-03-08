@@ -13,8 +13,15 @@ postgres_properties = {
     "driver": "org.postgresql.Driver",
 }
 
+# # Read new data from data source into a DataFrame (e.g., PostgreSQL)
+# new_data_df = spark.read.jdbc(postgres_url, "select * from car_insurance_claims", properties=postgres_properties)
+
 # Read new data from data source into a DataFrame (e.g., PostgreSQL)
-new_data_df = spark.read.jdbc(postgres_url, "select * from car_insurance_claims", properties=postgres_properties)
+new_data_df = spark.read.jdbc(url=postgres_url, table="(select * from car_insurance_claims) as tmp", properties=postgres_properties)
+
+# Read existing data from Hive table into a DataFrame
+existing_data_df = spark.table("project1db.carinsuranceclaims")
+
 
 # Read existing data from Hive table into a DataFrame
 existing_data_df = spark.table("project1db.carinsuranceclaims")
