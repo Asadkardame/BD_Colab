@@ -6,6 +6,7 @@ def test_incremental_load(self):
     initial_count_df = self.spark.sql("SELECT COUNT(*) AS count FROM project1db.carinsuranceclaims")
 
     initial_count = initial_count_df.collect()[0]["count"]
+    print("Initial_count")
 
     # Read data from PostgreSQL
     postgres_url = "jdbc:postgresql://ec2-3-9-191-104.eu-west-2.compute.amazonaws.com:5432/testdb"
