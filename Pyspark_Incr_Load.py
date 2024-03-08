@@ -30,7 +30,7 @@ class TestFullDataLoading(unittest.TestCase):
             "password": "WelcomeItc@2022",
             "driver": "org.postgresql.Driver",
         }
-        whereCondition = "POLICY_NUMBER = 3"
+        whereCondition = """"POLICY_NUMBER" = 3"""
         # Define the query with the WHERE condition
         query = "(SELECT * FROM public.car_insurance_claims1 WHERE " + whereCondition + ") AS data"
         print("Generated SQL query:", query)
