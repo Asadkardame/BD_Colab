@@ -12,7 +12,7 @@ def test_incremental_load(self):
         "password": "WelcomeItc@2022",
         "driver": "org.postgresql.Driver",
     }
-    whereCondition = "POLICY_NUMBER >= 1"
+    whereCondition = "POLICY_NUMBER = 1"
     # Define the query with the WHERE condition
     query = f"(SELECT * FROM car_insurance_claims1 WHERE {whereCondition}) AS data"
 
@@ -20,10 +20,10 @@ def test_incremental_load(self):
     newData = self.spark.read.jdbc(postgres_url, query, properties=postgres_properties)
 
     # Perform data loading to Hive
-    newData.write.mode('overwrite').saveAsTable("carinsuranceclaims")
+    newData.write.mode('overwrite').saveAsTable("project1db.carinsuranceclaims")
     
     # Read count of rows from Hive table after incremental load
-    updated_count_df = self.spark.sql("SELECT COUNT(*) AS count FROM carinsuranceclaims")
+    updated_count_df = self.spark.sql("SELECT COUNT(*) AS count FROM project1db.carinsuranceclaims")
     updated_count = updated_count_df.collect()[0]["count"]
 
     # Compute expected count
