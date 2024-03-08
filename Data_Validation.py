@@ -26,6 +26,25 @@ print("Missing Values:", missing_values)
 data_types = df.dtypes
 print("Data Types:", data_types)
 
+# Data Validation Checks
+# Check for missing values in specific columns
+columns_to_check_null = ['POLICY_NUMBER', 'AGE', 'BIRTH']
+missing_values_specific_columns = df.select([count(when(isnull(c), c)).alias(c) for c in columns_to_check_null]).collect()[0]
+print("Missing Values in Specific Columns:", missing_values_specific_columns)
+
+# Check for data types in specific columns
+columns_to_check_data_type = {'POLICY_NUMBER': 'integer', 'NAME': 'string'}
+incorrect_data_types = [(col_name, actual_type) for col_name, actual_type in df.dtypes if col_name in columns_to_check_data_type and actual_type != columns_to_check_data_type[col_name]]
+print("Incorrect Data Types in Specific Columns:", incorrect_data_types)
+
+# Check for unique values in specific columns
+columns_to_check_uniqueness = ['POLICY_NUMBER', 'AGE']
+unique_values_specific_columns = {col_name: df.select(col_name).distinct().count() for col_name in columns_to_check_uniqueness}
+print("Unique Values in Specific Columns:", unique_values_specific_columns)
+
+# Stop SparkSession
+spark.stop()
+
 # Check for uniqueness
 unique_rows = df.distinct().count()
 total_rows = df.count()
