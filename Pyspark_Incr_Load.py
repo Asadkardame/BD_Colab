@@ -18,6 +18,7 @@ def test_incremental_load(self):
     # Define the query with the WHERE condition
     # query = f"(SELECT * FROM car_insurance_claims1 WHERE {whereCondition}) AS data"
     query = "(SELECT * FROM car_insurance_claims1 WHERE " + whereCondition + ") AS data"
+    print("Generated SQL query:", query)
 
 
     # Read new data from PostgreSQL with the WHERE condition
