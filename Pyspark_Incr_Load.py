@@ -16,7 +16,9 @@ def test_incremental_load(self):
     }
     whereCondition = "POLICY_NUMBER = 1"
     # Define the query with the WHERE condition
-    query = f"(SELECT * FROM car_insurance_claims1 WHERE {whereCondition}) AS data"
+    # query = f"(SELECT * FROM car_insurance_claims1 WHERE {whereCondition}) AS data"
+    query = "(SELECT * FROM car_insurance_claims1 WHERE " + whereCondition + ") AS data"
+
 
     # Read new data from PostgreSQL with the WHERE condition
     newData = self.spark.read.jdbc(postgres_url, query, properties=postgres_properties)
