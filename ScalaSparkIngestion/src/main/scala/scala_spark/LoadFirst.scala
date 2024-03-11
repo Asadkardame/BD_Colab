@@ -1,7 +1,10 @@
 package scala_spark
-import javax.xml.transform.Transformer
+import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.functions._
+
 
 object LoadFirst {
+
 
   def main(args: Array[String]): Unit = {
     val spark: SparkSession = SparkSession.builder().master("local[*]").appName("MiniPrjScala").enableHiveSupport().getOrCreate()
@@ -17,9 +20,10 @@ object LoadFirst {
 
     // Renaming columns "name" to "full_name" and "age" to "current_age"
     //    /Transformer
-    val renamedDf = df.withColumnRenamed("name", "full_name")
-      .withColumnRenamed("age", "current_age")
 
+    val renamedDf = df.withColumnRenamed("name", "full_name").withColumnRenamed("age", "current_age")
+
+    //add
 
 
     renamedDf.write.mode("overwrite").saveAsTable("usukprjdb.people")
