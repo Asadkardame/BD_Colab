@@ -2,7 +2,7 @@ from os.path import abspath
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, regexp_replace
 
-class CarInsuranceClaimsProcessor:
+class CarInsuranceClaim:
     def __init__(self):
         self.spark = None
 
@@ -56,7 +56,7 @@ class CarInsuranceClaimsProcessor:
             print("No new records have been inserted in the PostgresSQL table.")
 
 if __name__ == "__main__":
-    processor = CarInsuranceClaimsProcessor()
+    processor = CarInsuranceClaim()
     processor.initialize_spark()
     processor.process_data()
     processor.close_spark()
