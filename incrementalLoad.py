@@ -23,7 +23,7 @@ class CarInsuranceClaim:
         postgres_properties = {
             "user": "consultants",
             "password": "WelcomeItc@2022",
-            "driver": "/var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar",
+            "driver": "org.postgresql.Driver",
         }
         postgres_table_name = "car_insurance_claims"
 
