@@ -19,25 +19,6 @@ postgres_schema = spark.read.format("jdbc") \
     .load() \
     .schema
 
-# Initialize Spark session
-spark = SparkSession.builder \
-    .appName("CompareSchema") \
-    .enableHiveSupport() \
-    .getOrCreate()
-
-# Define PostgreSQL table and Hive table names
-postgres_table_name = "people"
-hive_table_name = "usukprjdb.people"
-
-# Retrieve PostgreSQL table schema
-postgres_schema = spark.read.format("jdbc") \
-    .option("url", "jdbc:postgresql://ec2-3-9-191-104.eu-west-2.compute.amazonaws.com:5432/testdb") \
-    .option("dbtable", people) \
-    .option("user", "consultants") \
-    .option("password", "WelcomeItc@2022") \
-    .load() \
-    .schema
-
 # Retrieve Hive table schema
 hive_schema = spark.table(hive_table_name).schema
 
