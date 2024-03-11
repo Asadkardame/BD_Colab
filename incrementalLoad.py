@@ -23,7 +23,7 @@ class CarInsuranceClaim:
         postgres_properties = {
             "user": "consultants",
             "password": "WelcomeItc@2022",
-            "driver": "org.postgresql.Driver",
+            #"driver": "org.postgresql.Driver",
         }
         postgres_table_name = "car_insurance_claims"
 
