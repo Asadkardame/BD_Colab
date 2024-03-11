@@ -23,6 +23,6 @@ object LoadFirst {
 
 
 
-    renamedDf.write.mode( "overwrite").saveAsTable("usukprjdb.people")
+    renamedDf.write.mode("overwrite").saveAsTable("usukprjdb.people")
     println("In Hive")
   }}
