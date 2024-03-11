@@ -29,8 +29,6 @@ postgres_df = spark.read.format("jdbc") \
 # Retrieve Hive table schema
 hive_schema = spark.table(hive_table_name).schema
 
-# Retrieve Hive table schema
-hive_schema = spark.table(hive_table_name).schema
 
 # Compare schemas
 postgres_column_names = [field.name for field in postgres_schema.fields]
