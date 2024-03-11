@@ -46,7 +46,9 @@ if set(postgres_column_names) == set(hive_column_names):
             print("PostgreSQL data type: {}".format(postgres_field.dataType))
             print("Hive data type: {}".format(hive_field.dataType))
         else:
-            print("Data Types also matches")
+            print("Data Types Matches between the Columns")
+            print("PostgreSQL data type: {}".format(postgres_field.dataType))
+            print("Hive data type: {}".format(hive_field.dataType))
 else:
     print("Column names do not match between PostgreSQL and Hive tables.")
 
