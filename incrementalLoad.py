@@ -11,8 +11,6 @@ class CarInsuranceClaim:
         self.spark = SparkSession.builder \
             .appName("carInsuranceClaimsApp") \
             .enableHiveSupport() \
-            .config("spark.driver.extraClassPath", "/var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar") \
-            .config("spark.executor.extraClassPath", "/var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar") \
             .getOrCreate()
 
     def close_spark(self):
@@ -25,7 +23,7 @@ class CarInsuranceClaim:
         postgres_properties = {
             "user": "consultants",
             "password": "WelcomeItc@2022",
-            #"driver": "/var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar",
+            "driver": "/var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar",
         }
         postgres_table_name = "car_insurance_claims"
 
