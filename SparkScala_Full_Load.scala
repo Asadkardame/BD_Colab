@@ -1,0 +1,41 @@
+package scalatest;
+import org.apache.spark.sql.SparkSession
+
+object FullLoadTest {
+  def main(args: Array[String]): Unit = {
+      val spark: SparkSession = SparkSession.builder()
+      .appName("FullLoadPostgresToHiveTest")
+      .master("local[*]")  // Use local mode for testing
+      .getOrCreate()
+
+    val postgresUrl = "jdbc:postgresql://ec2-3-9-191-104.eu-west-2.compute.amazonaws.com:5432/testdb"
+    val postgresProperties = new java.util.Properties()
+    postgresProperties.put("user", "consultants")
+    postgresProperties.put("password", "WelcomeItc@2022")
+    postgresProperties.put("driver", "org.postgresql.Driver")
+    try {
+      
+      val dfPostgres = spark.read.jdbc(postgresUrl, "people", postgresProperties)
+
+      // Write test data to a temporary Hive table
+      // dfPostgres.write.mode("overwrite").saveAsTable("people")
+      // dfPostgres.write.mode("overwrite").option("path", "/custom/location/health_insurance").saveAsTable("health_insurance")
+
+      // Verify if the test data is loaded into the temporary Hive table
+      val hiveDataCount = spark.sql("SELECT COUNT(*) FROM people").collect()(0)(0)
+      val testDataCount = dfPostgres.count()
+      if (hiveDataCount == testDataCount) {
+        println("Test passed: Full load from PostgreSQL to Hive successful")
+      } else {
+        println(s"Test failed: Data count mismatch. Expected: $testDataCount, Actual: $hiveDataCount")
+      }
+      spark.stop()
+    } catch {
+      case e: Exception =>
+        println(s"Test failed: ${e.getMessage}")
+    } finally {
+      // Stop SparkSession after testing
+      spark.stop()
+    }
+  }
+}
