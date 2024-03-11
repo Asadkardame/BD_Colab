@@ -11,14 +11,12 @@ postgres_table_name = "people"
 hive_table_name = "usukprjdb.people"
 
 # Retrieve PostgreSQL table schema
-postgres_schema = spark.read.format("jdbc") \
-    .option("url", "jdbc:postgresql://ec2-3-9-191-104.eu-west-2.compute.amazonaws.com:5432/testdb") \
-    .option("dbtable", postgres_table_name) \
-    .option("user", "consultants") \
-    .option("password", "WelcomeItc@2022") \
-    .load() \
-    .schema
-
+postgres_url = "jdbc:postgresql://ec2-3-9-191-104.eu-west-2.compute.amazonaws.com:5432/testdb"
+        postgres_properties = {
+            "user": "consultants",
+            "password": "WelcomeItc@2022",
+            "driver": "org.postgresql.Driver",
+        }
 # Retrieve Hive table schema
 hive_schema = spark.table(hive_table_name).schema
 
