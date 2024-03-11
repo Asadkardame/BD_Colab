@@ -42,7 +42,12 @@ postgres_schema = spark.read.format("jdbc") \
 hive_schema = spark.table(hive_table_name).schema
 
 # Compare schemas
-postgres_column_names = [field.name for field in postgres_schema.fields]
+postgres_column_names = ["age"] 
+from pyspark.sql.types import StructType, StructField, StringType
+
+postgres_fields = [StructField(name, StringType(), True) for name in postgres_column_names]
+postgres_schema = StructType(postgres_fields)
+
 hive_column_names = [field.name for field in hive_schema.fields]
 
 if set(postgres_column_names) == set(hive_column_names):
