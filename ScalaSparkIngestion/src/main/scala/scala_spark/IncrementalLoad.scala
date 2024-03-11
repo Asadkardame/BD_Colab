@@ -23,7 +23,7 @@ object IncrementalLoad {
     println(moreData.printSchema())
     println(moreData.show(10))
 
-    df.write.mode("Append").saveAsTable("usukprjdb.people")
+    moreData.write.mode("Append").saveAsTable("usukprjdb.people")
     println("In Hive")
     println("Success")
 
