@@ -21,7 +21,7 @@ postgres_properties = {
 hive_schema = spark.table(hive_table_name).schema
 
 # Compare schemas
-postgres_column_names = ["age"] 
+postgres_column_names = ["people_id", "name", "age","occupation"] 
 from pyspark.sql.types import StructType, StructField, StringType
 
 postgres_fields = [StructField(name, StringType(), True) for name in postgres_column_names]
