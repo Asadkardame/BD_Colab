@@ -24,8 +24,11 @@ postgres_df = spark.read.format("jdbc") \
     .option("user", "consultants") \
     .option("password", "WelcomeItc@2022") \
     .option("driver", "org.postgresql.Driver") \
-    .load() \
-    .schema()
+    .load() 
+
+# Extract schema from the DataFrame
+postgres_schema = postgres_df.schema
+
 # Retrieve Hive table schema
 hive_schema = spark.table(hive_table_name).schema
 
