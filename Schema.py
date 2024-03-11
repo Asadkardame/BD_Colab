@@ -14,7 +14,10 @@ hive_table_name = "usukprjdb.people"
 postgres_schema = spark.read.format("jdbc") \
     .option("url", "jdbc:postgresql://your_postgres_host:your_postgres_port/your_database") \
     .option("dbtable", postgres_table_name) \
-    .option("user", "from pyspark.sql import SparkSession
+    .option("user", "consultants") \
+    .option("password", "WelcomeItc@2022") \
+    .load() \
+    .schema
 
 # Initialize Spark session
 spark = SparkSession.builder \
