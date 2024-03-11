@@ -1,5 +1,7 @@
 package scala_spark
 
+import javax.xml.transform.Transformer
+
 object LoadFirst {
 
   def main(args: Array[String]): Unit = {
@@ -15,6 +17,7 @@ object LoadFirst {
 //    df.show(10)
 
     // Renaming columns "name" to "full_name" and "age" to "current_age"
+//    /Transformer
     val renamedDf = df.withColumnRenamed("name", "full_name")
       .withColumnRenamed("age", "current_age")
 
