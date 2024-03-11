@@ -1,8 +1,5 @@
 package scala_spark
 
-import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.functions._
-
 object LoadFirst {
 
   def main(args: Array[String]): Unit = {
@@ -15,9 +12,14 @@ object LoadFirst {
     // Define the calculation of age
     //val df_age = df.withColumn("DOB", to_date(col("DOB"), "M/d/yyyy")).withColumn("age", floor(datediff(current_date(), col("DOB")) / 365))
 
-    df.show(10)
+//    df.show(10)
+
+    // Renaming columns "name" to "full_name" and "age" to "current_age"
+    val renamedDf = df.withColumnRenamed("name", "full_name")
+      .withColumnRenamed("age", "current_age")
 
 
-    df.write.mode( "overwrite").saveAsTable("usukprjdb.people")
+
+    renamedDf.write.mode( "overwrite").saveAsTable("usukprjdb.people")
     println("In Hive")
   }}
