@@ -16,7 +16,7 @@ object IncrementalLoad {
     val maxId = maxIdDF.head().getInt(0).toLong
     println(maxId)
 
-    val query = s"""SELECT * FROM people WHERE "ID" > $maxId"""
+    val query = s"""SELECT * FROM people WHERE "people_id" > $maxId"""
 
     val moreData = spark.read.format("jdbc").option("url", "jdbc:postgresql://ec2-3-9-191-104.eu-west-2.compute.amazonaws.com:5432/testdb").option("driver", "org.postgresql.Driver").option("user", "consultants").option("password", "WelcomeItc@2022").option("query", query).load()
 
