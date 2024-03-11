@@ -41,9 +41,9 @@ if set(postgres_column_names) == set(hive_column_names):
     # Check for data type mismatches
     for postgres_field, hive_field in zip(postgres_schema.fields, hive_schema.fields):
         if postgres_field.name != hive_field.name or postgres_field.dataType != hive_field.dataType:
-            print(f"Column '{postgres_field.name}' has a data type mismatch between PostgreSQL and Hive tables.")
-            print(f"PostgreSQL data type: {postgres_field.dataType}")
-            print(f"Hive data type: {hive_field.dataType}")
+            print("Column '{}' has a data type mismatch between PostgreSQL and Hive tables.".format(postgres_field.name))
+            print("PostgreSQL data type: {}".format(postgres_field.dataType))
+            print("Hive data type: {}".format(hive_field.dataType))
 else:
     print("Column names do not match between PostgreSQL and Hive tables.")
 
