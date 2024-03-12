@@ -40,10 +40,12 @@ class TestFullDataLoading(unittest.TestCase):
         df_hive.show()
         # Verify the number of rows loaded to Hive
         Hive_count = df_hive.count()
-        self.assertEqual(Hive_count, Postgres_count, "Number of rows loaded to Hive does not match expected count")
-        self.assertNotEqual(Hive_count, Postgres_count, "Number of rows loaded to Hive matches the expected count")    
-        print('Postgres_Count', Postgres_count)
-        print('Hive_count', Hive_count)
-
-if __name__ == '__main__':
+        if (Postgres_count==Hive_count) 
+            print("Number of rows loaded to Hive matches the expected count")
+            print('Postgres_Count', Postgres_count)
+            print('Hive_count', Hive_count)
+             
+        else:
+            self.assertEqual(Hive_count, Postgres_count, "Number of rows loaded to Hive does not match expected count")
+    if __name__ == '__main__':
     unittest.main()
