@@ -260,12 +260,13 @@ labelcol = "claim_flag"
 
 
 # String Index
-indexer = StringIndexer(inputCols =  catcols,
-                        outputCols=["{}_indexed".format(col) for col in catcols])
+# StringIndexer
+indexer = StringIndexer(inputCols=catcols, outputCol="indexed")
+indexed_data = indexer.fit(data).transform(data)
 
-data = indexer.fit(data).transform(data)
-
-
+# OneHotEncode the indexed columns
+OHE = OneHotEncoder(inputCol="indexed", outputCols=["{}_OHE".format(col) for col in catcols])
+data = OHE.fit(indexed_data).transform(indexed_data)
 # In[21]:
 
 
