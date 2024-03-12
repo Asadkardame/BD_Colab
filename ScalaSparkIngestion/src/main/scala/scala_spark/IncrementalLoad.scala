@@ -2,7 +2,6 @@ package scala_spark
 
 import org.apache.spark.sql.SparkSession
 
-
 object IncrementalLoad {
   def main(args: Array[String]): Unit = {
 
@@ -18,7 +17,8 @@ object IncrementalLoad {
 
     val query = s"""SELECT * FROM people WHERE "people_id" > $maxId"""
 
-    val moreData = spark.read.format("jdbc").option("url", "jdbc:postgresql://ec2-3-9-191-104.eu-west-2.compute.amazonaws.com:5432/testdb").option("driver", "org.postgresql.Driver").option("user", "consultants").option("password", "WelcomeItc@2022").option("query", query).load()
+    val moreData = spark.read.format("jdbc").option("url", "jdbc:postgresql://ec2-3-9-191-104.eu-west-2.compute.amazonaws.com:5432/testdb")
+      .option("driver", "org.postgresql.Driver").option("user", "consultants").option("password", "WelcomeItc@2022").option("query", query).load()
 
     println(moreData.printSchema())
     println(moreData.show(10))
@@ -26,8 +26,5 @@ object IncrementalLoad {
     moreData.write.mode("Append").saveAsTable("usukprjdb.people")
     println("In Hive")
     println("Success")
+  }}
 
-
-  }
-
-}
