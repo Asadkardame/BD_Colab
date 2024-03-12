@@ -1,4 +1,3 @@
-import findspark
 from pyspark.sql import SparkSession
 from pyspark.ml.feature import Imputer, StringIndexer, OneHotEncoder, VectorAssembler
 from pyspark.ml.evaluation import BinaryClassificationEvaluator
@@ -6,7 +5,6 @@ from pyspark.ml.classification import LogisticRegression, RandomForestClassifier
 import os
 
 def initialize_spark():
-    findspark.init()
     appName = "SparkwithMlib"
     master = "local"
     spark = SparkSession.builder.master(master).appName(appName).enableHiveSupport().getOrCreate()
