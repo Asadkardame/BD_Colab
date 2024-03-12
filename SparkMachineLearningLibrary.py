@@ -261,7 +261,7 @@ labelcol = "claim_flag"
 
 # String Index
 indexer = StringIndexer(inputCols =  catcols,
-                        outputCols = [col + "_indexed" for col in catcols])
+                        outputCols=["{}_indexed".format(col) for col in catcols])
 
 data = indexer.fit(data).transform(data)
 
