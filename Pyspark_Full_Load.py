@@ -25,7 +25,7 @@ class TestFullDataLoading(unittest.TestCase):
             "password": "WelcomeItc@2022",
             "driver": "org.postgresql.Driver",
         }
-        postgres_table_name = "health_insurance"
+        postgres_table_name = "people"
         df_postgres = self.spark.read.jdbc(url=postgres_url, table=postgres_table_name, properties=postgres_properties)
         df_postgres.show()
         Postgres_count = df_postgres.count()
@@ -33,10 +33,10 @@ class TestFullDataLoading(unittest.TestCase):
         # Perform data loading to Hive
         hive_database_name = "sanket_db"
         hive_table_name = "health_insurance"
-        df_postgres.write.mode('overwrite').saveAsTable("sanket_db.health_insurance")
+        df_postgres.write.mode('overwrite').saveAsTable("usukprjdb.people")
 
         # Read Hive table
-        df_hive = self.spark.read.table("sanket_db.health_insurance")
+        df_hive = self.spark.read.table("usukprjdb.people")
         df_hive.show()
         # Verify the number of rows loaded to Hive
         Hive_count = df_hive.count()
