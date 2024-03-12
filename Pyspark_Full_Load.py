@@ -47,5 +47,5 @@ class TestFullDataLoading(unittest.TestCase):
              
         else:
             self.assertEqual(Hive_count, Postgres_count, "Number of rows loaded to Hive does not match expected count")
-    if __name__ == '__main__':
+if __name__ == '__main__':
     unittest.main()
