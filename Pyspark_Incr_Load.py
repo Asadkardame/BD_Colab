@@ -49,6 +49,14 @@ class TestFullDataLoading(unittest.TestCase):
         # Compute expected count
         expected_count = initial_count + newData.count()
 
+        if (updated_count==expected_count):
+            print("Number of rows loaded to Hive matches the expected count")
+            print('Postgres_Count', expected_count)
+            print('Hive_count', updated_count)
+             
+        else:
+            self.assertEqual(updated_count, expected_count, "Number of rows loaded to Hive does not match expected count")
+
         # Verify the number of rows loaded to Hive
         self.assertEqual(updated_count, expected_count, "Number of rows loaded to Hive after incremental load does not match expected count")
 
