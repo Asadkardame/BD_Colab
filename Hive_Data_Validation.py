@@ -36,17 +36,28 @@ print("Missing Values in New Data:", new_missing_values)
 existing_missing_values = existing_data_df.select([count(when(isnull(c), c)).alias(c) for c in existing_data_df.columns]).collect()[0]
 print("Missing Values in Existing Data:", existing_missing_values)
 
-# 3. Check for duplicate rows in new data
-new_unique_rows = new_data_df.distinct().count()
-new_total_rows = new_data_df.count()
-if new_unique_rows != new_total_rows:
-    print("New Data contains duplicate rows.")
+# # 3. Check for duplicate rows in new data
+# new_unique_rows = new_data_df.distinct().count()
+# new_total_rows = new_data_df.count()
+# if new_unique_rows != new_total_rows:
+#     print("New Data contains duplicate rows.")
+
+# # 4. Check for duplicate rows in existing data
+# existing_unique_rows = existing_data_df.distinct().count()
+# existing_total_rows = existing_data_df.count()
+# if existing_unique_rows != existing_total_rows:
+#     print("Existing Data contains duplicate rows.", existing_unique_rows)
+
+new_duplicates = new_data_df.exceptAll(existing_data_df)
+if new_duplicates.count() > 0:
+    print("Duplicate rows in New Data:")
+    new_duplicates.show()
 
 # 4. Check for duplicate rows in existing data
-existing_unique_rows = existing_data_df.distinct().count()
-existing_total_rows = existing_data_df.count()
-if existing_unique_rows != existing_total_rows:
-    print("Existing Data contains duplicate rows.", existing_unique_rows)
+existing_duplicates = existing_data_df.exceptAll(new_data_df)
+if existing_duplicates.count() > 0:
+    print("Duplicate rows in Existing Data:")
+    existing_duplicates.show()
 
 # Additional validation checks can be added as needed
 
