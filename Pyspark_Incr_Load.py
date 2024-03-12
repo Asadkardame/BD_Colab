@@ -16,9 +16,9 @@ class TestFullDataLoading(unittest.TestCase):
 
     def test_Incr_Load(self):  # Make sure your test method begins with "test"
         # Read initial count of rows from Hive table
-        hive_database_name = "project1db"
-        hive_table_name = "carinsuranceclaims"
-        initial_count_df = self.spark.sql("SELECT COUNT(*) AS count FROM project1db.carinsuranceclaims")
+        hive_database_name = "usukprjdb"
+        hive_table_name = "people"
+        initial_count_df = self.spark.sql("SELECT COUNT(*) AS count FROM usukprjdb.people")
 
         initial_count = initial_count_df.collect()[0]["count"]
         print("Initial_count:", initial_count)
@@ -30,9 +30,9 @@ class TestFullDataLoading(unittest.TestCase):
             "password": "WelcomeItc@2022",
             "driver": "org.postgresql.Driver",
         }
-        whereCondition = """"POLICY_NUMBER" = 3"""
+        whereCondition = """"PEOPLE_ID" = 14"""
         # Define the query with the WHERE condition
-        query = "(SELECT * FROM public.car_insurance_claims1 WHERE " + whereCondition + ") AS data"
+        query = "(SELECT * FROM public.people WHERE " + whereCondition + ") AS data"
         print("Generated SQL query:", query)
 
         # Read new data from PostgreSQL with the WHERE condition
@@ -40,10 +40,10 @@ class TestFullDataLoading(unittest.TestCase):
         newData.show()
 
         # Perform data loading to Hive
-        newData.write.mode('append').saveAsTable("project1db.carinsuranceclaims")
+        newData.write.mode('append').saveAsTable("usukprjdb.people")
         
         # Read count of rows from Hive table after incremental load
-        updated_count_df = self.spark.sql("SELECT COUNT(*) AS count FROM project1db.carinsuranceclaims")
+        updated_count_df = self.spark.sql("SELECT COUNT(*) AS count FROM usukprjdb.people")
         updated_count = updated_count_df.collect()[0]["count"]
 
         # Compute expected count
