@@ -46,7 +46,7 @@ if new_unique_rows != new_total_rows:
 existing_unique_rows = existing_data_df.distinct().count()
 existing_total_rows = existing_data_df.count()
 if existing_unique_rows != existing_total_rows:
-    print("Existing Data contains duplicate rows.")
+    print("Existing Data contains duplicate rows.", existing_unique_rows)
 
 # Additional validation checks can be added as needed
 
