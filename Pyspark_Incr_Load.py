@@ -30,7 +30,7 @@ class TestIncrDataLoading(unittest.TestCase):
             "password": "WelcomeItc@2022",
             "driver": "org.postgresql.Driver",
         }
-        whereCondition = """"PEOPLE_ID" = 14"""
+        whereCondition = """"PEOPLE_ID" > 14"""
         # Define the query with the WHERE condition
         query = "(SELECT * FROM public.people WHERE " + whereCondition + ") AS data"
         print("Generated SQL query:", query)
