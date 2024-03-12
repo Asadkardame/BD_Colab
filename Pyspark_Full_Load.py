@@ -28,7 +28,7 @@ class TestFullDataLoading(unittest.TestCase):
         postgres_table_name = "health_insurance"
         df_postgres = self.spark.read.jdbc(url=postgres_url, table=postgres_table_name, properties=postgres_properties)
         df_postgres.show()
-        expected_count = df_postgres.count()
+        Postgres_count = df_postgres.count()
 
         # Perform data loading to Hive
         hive_database_name = "sanket_db"
@@ -39,8 +39,10 @@ class TestFullDataLoading(unittest.TestCase):
         df_hive = self.spark.read.table("sanket_db.health_insurance")
         df_hive.show()
         # Verify the number of rows loaded to Hive
-        actual_count = df_hive.count()
-        self.assertEqual(actual_count, expected_count, "Number of rows loaded to Hive does not match expected count")
+        Hive_count = df_hive.count()
+        self.assertEqual(Hive_count, Postgres_count, "Number of rows loaded to Hive does not match expected count")
+        print('Postgres_Count', Postgres_count)
+        print('Hive_count', Hive_count)
 
 if __name__ == '__main__':
     unittest.main()
