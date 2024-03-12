@@ -7,8 +7,8 @@ spark = SparkSession.builder \
     .getOrCreate()
 
 # Define PostgreSQL table and Hive table names
-postgres_table_name = "people"
-hive_table_name = "usukprjdb.people"
+postgres_table_name = "car_insurance_claims1"
+hive_table_name = "project1db.carinsuranceclaims"
 
 # # Retrieve PostgreSQL table schema
 # postgres_url = "jdbc:postgresql://ec2-3-9-191-104.eu-west-2.compute.amazonaws.com:5432/testdb"
