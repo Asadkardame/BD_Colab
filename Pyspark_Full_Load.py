@@ -40,7 +40,7 @@ class TestFullDataLoading(unittest.TestCase):
         df_hive.show()
         # Verify the number of rows loaded to Hive
         Hive_count = df_hive.count()
-        if (Postgres_count==Hive_count) 
+        if (Postgres_count==Hive_count):
             print("Number of rows loaded to Hive matches the expected count")
             print('Postgres_Count', Postgres_count)
             print('Hive_count', Hive_count)
