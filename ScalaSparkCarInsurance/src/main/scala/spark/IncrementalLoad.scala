@@ -13,7 +13,7 @@ object IncrementalLoad {
       .getOrCreate()
 
     val maxIdDF = spark.sql("SELECT max(id) FROM usukprjdb.car_insurance_claims")
-    val maxId = maxIdDF.head().getInt(0).toLong
+    val maxId = maxIdDF.head().getLong(0)
     println(maxId)
 
     val query = s"""SELECT * FROM car_insurance_claims WHERE "id" > $maxId"""
@@ -26,8 +26,6 @@ object IncrementalLoad {
     moreData.write.mode("Append").saveAsTable("usukprjdb.car_insurance_claims")
     println("In Hive")
     println("Success")
-
-
   }
 
 }
