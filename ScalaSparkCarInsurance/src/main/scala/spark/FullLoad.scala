@@ -15,7 +15,7 @@ object FullLoad{
 
     // Renaming column "age" to "current_age"
     // Transformer
-    val renamedDf = df.withColumnRenamed("AGE", "CURRENT_AGE")
+    val renamedDf = df.withColumnRenamed("CURRENT_AGE","AGE")
 
     renamedDf.write.mode("overwrite").saveAsTable("usukprjdb.car_insurance_claims")
     println("In Hive")
