@@ -12,11 +12,11 @@ object IncrementalLoad {
       .enableHiveSupport()
       .getOrCreate()
 
-    val maxIdDF = spark.sql("SELECT max(id) FROM usukprjdb.car_insurance_claims")
+    val maxIdDF = spark.sql("SELECT max(ID) FROM usukprjdb.car_insurance_claims")
     val maxId = maxIdDF.head().getLong(0)
     println(maxId)
 
-    val query = s"""SELECT * FROM car_insurance_claims WHERE "id" > $maxId"""
+    val query = s"""SELECT * FROM car_insurance_claims WHERE "ID" > $maxId"""
 
     val moreData = spark.read.format("jdbc").option("url", "jdbc:postgresql://ec2-3-9-191-104.eu-west-2.compute.amazonaws.com:5432/testdb").option("driver", "org.postgresql.Driver").option("user", "consultants").option("password", "WelcomeItc@2022").option("query", query).load()
 
