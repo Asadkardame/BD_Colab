@@ -6,7 +6,11 @@ ENV POSTGRES_DRIVER_VERSION=42.2.23
 
 # Install necessary packages
 RUN apt-get update && \
-    apt-get install -y openjdk-11-jdk
+    apt-get install -y wget gnupg2 && \
+    wget -qO- https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add - && \
+    echo "deb https://adoptopenjdk.jfrog.io/adoptopenjdk/deb buster main" | tee /etc/apt/sources.list.d/adoptopenjdk.list && \
+    apt-get update && \
+    apt-get install -y adoptopenjdk-11-hotspot
 
 # Download and install Spark
 RUN wget -qO- https://archive.apache.org/dist/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION-bin-hadoop3.2.tgz | tar xz -C /usr/local/
@@ -27,5 +31,5 @@ WORKDIR /app
 COPY incrementalLoad.py /app/
 
 # Set the entry point
-ENTRYPOINT ["spark-submit", "--jars", "/usr/local/spark/jars/postgresql-$POSTGRES_DRIVER_VERSION.jar", "incremental.py"]
+ENTRYPOINT ["spark-submit", "--jars", "/usr/local/spark/jars/postgresql-$POSTGRES_DRIVER_VERSION.jar", "incrementalLoad.py"]
 
