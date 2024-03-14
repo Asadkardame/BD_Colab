@@ -31,8 +31,8 @@ class TestFullDataLoading(unittest.TestCase):
         Postgres_count = df_postgres.count()
 
         # Perform data loading to Hive
-        hive_database_name = "sanket_db"
-        hive_table_name = "health_insurance"
+        hive_database_name = "usukprjdb"
+        hive_table_name = "people"
         df_postgres.write.mode('overwrite').saveAsTable("usukprjdb.people")
 
         # Read Hive table
