@@ -18,8 +18,9 @@ COPY incrementalLoad.py .
 # Download and add the PostgreSQL JDBC driver
 RUN apt-get update && \
     apt-get install -y wget && \
-    wget -O postgresql.jar https://jdbc.postgresql.org/download/postgresql-42.2.23.jar && \
-    mv postgresql.jar /app
+    wget -O postgresql.jar https://jdbc.postgresql.org/download/postgresql-42.2.23.jar
+
+RUN mv postgresql-42.2.23.jar /app/postgresql-42.2.23.jar
 
 # Set the entrypoint
 CMD ["spark-submit", "--master", "local[*]", "--jars", "/app/postgresql-42.2.23.jar", "incrementalLoad.py"]
