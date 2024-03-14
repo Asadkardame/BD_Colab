@@ -15,7 +15,7 @@ postgres_properties = {
 }
 
 # Read data from PostgreSQL into a DataFrame
-df = spark.read.jdbc(postgres_url, "car_insurance_claims", properties=postgres_properties)
+df = spark.read.jdbc(postgres_url, "people", properties=postgres_properties)
 
 # Data Validation Checks
 # Check for missing values
@@ -28,17 +28,17 @@ print("Data Types:", data_types)
 
 # Data Validation Checks
 # Check for missing values in specific columns
-columns_to_check_null = ['GENDER', 'AGE', 'BIRTH']
+columns_to_check_null = ['PEOPLE_ID']
 missing_values_specific_columns = df.select([count(when(isnull(c), c)).alias(c) for c in columns_to_check_null]).collect()[0]
 print("Missing Values in Specific Columns:", missing_values_specific_columns)
 
 # Check for data types in specific columns
-columns_to_check_data_type = {'AGE': 'integer', 'GENDER': 'string'}
+columns_to_check_data_type = {'PEOPLE_ID': 'integer'}
 incorrect_data_types = [(col_name, actual_type) for col_name, actual_type in df.dtypes if col_name in columns_to_check_data_type and actual_type != columns_to_check_data_type[col_name]]
 print("Incorrect Data Types in Specific Columns:", incorrect_data_types)
 
 # Check for unique values in specific columns
-columns_to_check_uniqueness = ['INCOME', 'GENDER']
+columns_to_check_uniqueness = ['PEOPLE_ID']
 unique_values_specific_columns = {col_name: df.select(col_name).distinct().count() for col_name in columns_to_check_uniqueness}
 print("Unique Values in Specific Columns:", unique_values_specific_columns)
 
