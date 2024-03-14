@@ -1,35 +1,26 @@
-FROM python:3.8-slim
+FROM openjdk:8-jre-slim-buster
 
-# Set environment variables
-ENV SPARK_VERSION=3.1.1
-ENV POSTGRES_DRIVER_VERSION=42.2.23
-
-# Install necessary packages
+# Install Python and pip
 RUN apt-get update && \
-    apt-get install -y wget gnupg2 && \
-    wget -qO- https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add - && \
-    echo "deb https://adoptopenjdk.jfrog.io/adoptopenjdk/deb buster main" | tee /etc/apt/sources.list.d/adoptopenjdk.list && \
-    apt-get update && \
-    apt-get install -y adoptopenjdk-11-hotspot
+    apt-get install -y python3 python3-pip && \
+    rm -rf /var/lib/apt/lists/*
 
-# Download and install Spark
-RUN wget -qO- https://archive.apache.org/dist/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION-bin-hadoop3.2.tgz | tar xz -C /usr/local/
-RUN ln -s /usr/local/spark-$SPARK_VERSION-bin-hadoop3.2 /usr/local/spark
+# Install PySpark
+RUN pip3 install pyspark==3.2.1
+RUN pip3 install findspark
 
-# Set environment variables for Spark and PySpark
-ENV SPARK_HOME=/usr/local/spark
-ENV PATH=$PATH:$SPARK_HOME/bin
-ENV PYTHONPATH=$SPARK_HOME/python:$PYTHONPATH
-
-# Add PostgreSQL JDBC driver
-ADD https://jdbc.postgresql.org/download/postgresql-$POSTGRES_DRIVER_VERSION.jar $SPARK_HOME/jars/
-
-# Set up your working directory
+# Set the working directory
 WORKDIR /app
 
-# Copy your Python script and other necessary files
-COPY incrementalLoad.py /app/
+# Copy the PySpark application code into the container
+COPY incrementalLoad.py .
 
-# Set the entry point
-ENTRYPOINT ["spark-submit", "--jars", "/usr/local/spark/jars/postgresql-$POSTGRES_DRIVER_VERSION.jar", "incrementalLoad.py"]
+# Download and add the PostgreSQL JDBC driver
+RUN apt-get update && \
+    apt-get install -y wget && \
+    wget -O postgresql.jar https://jdbc.postgresql.org/download/postgresql-42.2.23.jar && \
+    mv postgresql.jar /app
+
+# Set the entrypoint
+CMD ["spark-submit", "--master", "local[*]", "--jars", "/app/postgresql-42.2.23.jar", "incrementalLoad.py"]
 
