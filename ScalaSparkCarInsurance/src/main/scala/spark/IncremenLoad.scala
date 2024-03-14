@@ -3,7 +3,7 @@ package spark
 import org.apache.spark.sql.{SparkSession, DataFrame}
 import org.apache.spark.sql.functions._
 
-object IncrementalLoad {
+object IncremenLoad {
   def main(args: Array[String]): Unit = {
 
     val spark: SparkSession = SparkSession.builder()
