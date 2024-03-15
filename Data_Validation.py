@@ -45,7 +45,7 @@ try:
     print("Incorrect Data Types in Specific Columns:", incorrect_data_types)
 
     # Check for unique values in specific columns
-    columns_to_check_uniqueness = ['OCCUPATION']
+    columns_to_check_uniqueness = ['PEOPLE_iD']
     unique_values_specific_columns = {col_name: df.select(col_name).distinct().count() for col_name in columns_to_check_uniqueness}
     print("Unique Values in Specific Columns:", unique_values_specific_columns)
 
