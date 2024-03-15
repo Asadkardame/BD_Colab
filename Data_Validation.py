@@ -15,7 +15,7 @@ postgres_properties = {
 }
 
 # Read data from PostgreSQL into a DataFrame
-df = spark.read.jdbc(postgres_url, "people", properties=postgres_properties)
+df = spark.read.jdbc(postgres_url, "people2", properties=postgres_properties)
 
 # Data Validation Checks
 # Check for missing values
