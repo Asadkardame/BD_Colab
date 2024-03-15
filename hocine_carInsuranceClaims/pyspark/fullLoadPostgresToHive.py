@@ -1,15 +1,10 @@
-from os.path import abspath
+# from os.path import abspath
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import regexp_replace, col
 
 # Create spark session with hive enabled
-spark = SparkSession.builder \
-    .appName("carInsuranceClaimsApp") \
-    .enableHiveSupport() \
-    .getOrCreate()
+spark = SparkSession.builder.appName("carInsuranceClaimsApp").enableHiveSupport().getOrCreate()
 # .config("spark.jars", "/Users/hmakhlouf/Desktop/TechCnsltng_WorkSpace/config/postgresql-42.7.2.jar") \
-
-
 
 
 ## 1- Establish the connection to PostgresSQL and read data from the postgres Database -testdb
@@ -33,7 +28,8 @@ df_postgres.show(3)
 
 # Rename column from "ID" to "policy_number"
 df_postgres = df_postgres.withColumnRenamed("ID", "POLICY_NUMBER")
-df_postgres.show(3)
+df_postgres.printSchema()
+
 
 # Specify the column to be modified
 columns_to_modify = ["MSTATUS", "GENDER", "EDUCATION", "OCCUPATION", "CAR_TYPE", "URBANICITY"]
@@ -41,7 +37,7 @@ columns_to_modify = ["MSTATUS", "GENDER", "EDUCATION", "OCCUPATION", "CAR_TYPE",
 for column in columns_to_modify:
     df_postgres = df_postgres.withColumn(column, regexp_replace(col(column), "^z_", ""))
 
-
+df_postgres.show(3)
 #-+-+--+-+--+-+--+-+--+-+--+-+--+-+--+-+--+-+--+-+--+-+--+-+--+-+--+-+--+-+--+-+-
 #-+-+--+-+--+-+--+-+--+-+--+-+--+-+--+-+--+-+--+-+--+-+--+-+--+-+--+-+--+-+--+-+-
 
