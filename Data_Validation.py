@@ -56,6 +56,14 @@ try:
         print("Data contains duplicate rows.")
     else:
         print("Data does not contain duplicate rows.")
+        
+    primary_key_check = df.select("PEOPLE_ID").distinct().count()
+    total_rows = df.count()
+    if primary_key_check != total_rows:
+        print("Primary key constraint violated for field PEOPLE_ID. Duplicate values found.")
+    else:
+        print("Primary key constraint satisfied for field PEOPLE_ID. All values are unique.")
+
 
 except Exception as e:
     print("Error:", e)
