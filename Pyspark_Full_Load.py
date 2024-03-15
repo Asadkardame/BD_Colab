@@ -30,10 +30,10 @@ class TestFullDataLoading(unittest.TestCase):
         df_postgres.show()
         Postgres_count = df_postgres.count()
 
-        # Perform data loading to Hive
-        hive_database_name = "usukprjdb"
-        hive_table_name = "people"
-        df_postgres.write.mode('overwrite').saveAsTable("usukprjdb.people")
+        # # Perform data loading to Hive
+        # hive_database_name = "usukprjdb"
+        # hive_table_name = "people"
+        # df_postgres.write.mode('overwrite').saveAsTable("usukprjdb.people")
 
         # Read Hive table
         df_hive = self.spark.read.table("usukprjdb.people")
