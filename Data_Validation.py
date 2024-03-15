@@ -13,7 +13,7 @@ postgres_properties = {
     "password": "WelcomeItc@2022",
     "driver": "org.postgresql.Driver",
 }
-
+print("Entering")
 # Read data from PostgreSQL into a DataFrame
 df = spark.read.jdbc(postgres_url, "people2", properties=postgres_properties)
 
