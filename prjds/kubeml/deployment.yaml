@@ -7,7 +7,7 @@ spec:
     spec:
       containers:
       - name: pyspark
-        image: uttamraj9/pysparkkube01:pysparkkube
+        image: uttamraj9/predictincmodel:predictincdata
       restartPolicy: Never
   backoffLimit: 4
 
