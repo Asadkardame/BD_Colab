@@ -9,6 +9,7 @@ RUN apt-get update && \
 RUN pip3 install pyspark==3.2.1
 RUN pip3 install findspark
 RUN pip3 install numpy
+RUN rm -rf /opt/spark-app/models/insurance_model
 # Set the working directory
 WORKDIR /app
 
