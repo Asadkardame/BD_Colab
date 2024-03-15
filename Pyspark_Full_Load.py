@@ -25,7 +25,7 @@ class TestFullDataLoading(unittest.TestCase):
             "password": "WelcomeItc@2022",
             "driver": "org.postgresql.Driver",
         }
-        postgres_table_name = "people"
+        postgres_table_name = "people2"
         df_postgres = self.spark.read.jdbc(url=postgres_url, table=postgres_table_name, properties=postgres_properties)
         df_postgres.show()
         Postgres_count = df_postgres.count()
