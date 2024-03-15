@@ -1,0 +1,13 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: my-pyspark-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: pyspark
+        image: uttamraj9/pysparkkube01:pysparkkube
+      restartPolicy: Never
+  backoffLimit: 4
+

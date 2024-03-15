@@ -1,0 +1,13 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pysparkml-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: pysparkml
+        image: uttamraj9/testpysparkmlkube:pysparkml
+      restartPolicy: Never
+  backoffLimit: 4
+
