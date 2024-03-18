@@ -26,6 +26,19 @@ postgres_df = spark.read.format("jdbc") \
     .option("driver", "org.postgresql.Driver") \
     .load() 
 
+# Extract column names from the PostgreSQL DataFrame schema
+postgres_column_names = postgres_df.columns
+print("PostgreSQL Table Column Names:")
+print(postgres_column_names)
+
+# Retrieve Hive table schema
+hive_df = spark.table(hive_table_name)
+
+# Extract column names from the Hive DataFrame schema
+hive_column_names = hive_df.columns
+print("Hive Table Column Names:")
+print(hive_column_names)
+
 # Extract schema from the DataFrame
 postgres_schema = postgres_df.schema
 
