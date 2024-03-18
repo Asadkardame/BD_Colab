@@ -9,7 +9,7 @@ spark = SparkSession.builder \
 
 postgres_df = spark.read \
     .format("jdbc") \
-    .option("url", "jdbc:postgresql://ec2-3-9-191-104.eu-west-2.compute.amazonaws.com:5432/testdb") \
+    .option("url", "postgresql://ec2-3-9-191-104.eu-west-2.compute.amazonaws.com:5432/testdb") \
     .option("dbtable", people") \
     .option("user", "consultants") \
     .option("password", "Welcome@2022") \
