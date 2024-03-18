@@ -46,7 +46,7 @@ try:
         print("No negative values found in the 'age' column.")
 
     # Check for data types in specific columns
-    columns_to_check_data_type = {'PEOPLE_ID': 'string'}
+    columns_to_check_data_type = {'PEOPLE_ID': 'String'}
     incorrect_data_types = [(col_name, actual_type) for col_name, actual_type in df.dtypes if col_name in columns_to_check_data_type and actual_type != columns_to_check_data_type[col_name]]
     print("Incorrect Data Types in Specific Columns:", incorrect_data_types)
 
