@@ -21,7 +21,7 @@ postgres_df = spark.read \
 #     "user": "consultants",
 #     "password": "WelcomeItc@2022",
 #     "driver": "org.postgresql.Driver",
-}
+# }
 
 # Read data from Hive
 hive_df = spark.sql("SELECT * FROM usukprjdb.people")
