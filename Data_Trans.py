@@ -16,7 +16,7 @@ postgres_url = "jdbc:postgresql://ec2-3-9-191-104.eu-west-2.compute.amazonaws.co
         }
 
 # Read data from Hive
-hive_df = spark.sql("SELECT * FROM people")
+hive_df = spark.sql("SELECT * FROM usukprjdb.people")
 
 # Compare counts
 postgres_count = postgres_df.count()
