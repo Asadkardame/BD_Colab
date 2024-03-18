@@ -8,21 +8,21 @@ spark = SparkSession.builder \
     .enableHiveSupport() \
     .getOrCreate()
 
-postgres_df = spark.read \
-    .format("jdbc") \
-    .option("url", "postgresql://ec2-3-9-191-104.eu-west-2.compute.amazonaws.com:5432/testdb") \
-    .option("dbtable", "people") \
-    .option("user", "consultants") \
-    .option("password", "Welcome@2022") \
-    .load()
+# postgres_df = spark.read \
+#     .format("jdbc") \
+#     .option("url", "postgresql://ec2-3-9-191-104.eu-west-2.compute.amazonaws.com:5432/testdb") \
+#     .option("dbtable", "people") \
+#     .option("user", "consultants") \
+#     .option("password", "Welcome@2022") \
+#     .load()
 
-# # Read data from PostgreSQL
-# postgres_url = "jdbc:postgresql://ec2-3-9-191-104.eu-west-2.compute.amazonaws.com:5432/testdb"
-# postgres_properties = {
-#     "user": "consultants",
-#     "password": "WelcomeItc@2022",
-#     "driver": "org.postgresql.Driver",
-# }
+# Read data from PostgreSQL
+postgres_url = "jdbc:postgresql://ec2-3-9-191-104.eu-west-2.compute.amazonaws.com:5432/testdb"
+postgres_properties = {
+    "user": "consultants",
+    "password": "WelcomeItc@2022",
+    "driver": "org.postgresql.Driver",
+}
 
 # Read data from Hive
 hive_df = spark.sql("SELECT * FROM usukprjdb.people")
