@@ -7,12 +7,20 @@ spark = SparkSession.builder \
     .enableHiveSupport() \
     .getOrCreate()
 
-# Read data from PostgreSQL
-postgres_url = "jdbc:postgresql://ec2-3-9-191-104.eu-west-2.compute.amazonaws.com:5432/testdb"
-postgres_properties = {
-    "user": "consultants",
-    "password": "WelcomeItc@2022",
-    "driver": "org.postgresql.Driver",
+postgres_df = spark.read \
+    .format("jdbc") \
+    .option("url", "jdbc:postgresql://ec2-3-9-191-104.eu-west-2.compute.amazonaws.com:5432/testdb") \
+    .option("dbtable", people") \
+    .option("user", consultants) \
+    .option("password", Welcome@2022) \
+    .load()
+
+# # Read data from PostgreSQL
+# postgres_url = "jdbc:postgresql://ec2-3-9-191-104.eu-west-2.compute.amazonaws.com:5432/testdb"
+# postgres_properties = {
+#     "user": "consultants",
+#     "password": "WelcomeItc@2022",
+#     "driver": "org.postgresql.Driver",
 }
 
 # Read data from Hive
