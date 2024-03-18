@@ -35,7 +35,7 @@ try:
 
     # Data Validation Checks
     # Check for missing values in specific columns
-    columns_to_check_null = ['PEOPLE_ID']
+    columns_to_check_null = ['OCCUPATION']
     missing_values_specific_columns = df.select([count(when(isnull(c), c)).alias(c) for c in columns_to_check_null]).collect()[0]
     print("Missing Values in Specific Columns:", missing_values_specific_columns)
 
