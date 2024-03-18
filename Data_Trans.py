@@ -3,6 +3,7 @@ from pyspark.sql import SparkSession
 # Initialize SparkSession
 spark = SparkSession.builder \
     .appName("Count_Comparison_After_Transformation") \
+    .config("spark.driver.extraClassPath", "/var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar") \
     .config("spark.jars.packages", "org.postgresql:postgresql:42.2.18") \
     .enableHiveSupport() \
     .getOrCreate()
