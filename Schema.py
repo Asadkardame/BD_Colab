@@ -34,13 +34,21 @@ hive_schema = spark.table(hive_table_name).schema
 
 
 # Compare schemas
-postgres_column_names = [field.name for field in postgres_schema.fields]
-hive_column_names = [field.name for field in hive_schema.fields]
+# postgres_column_names = [field.name for field in postgres_schema.fields]
+# hive_column_names = [field.name for field in hive_schema.fields]
+
+postgres_column_names = [field.name.lower() for field in postgres_schema.fields]
+hive_column_names = [field.name.lower() for field in hive_schema.fields]
 
 if set(postgres_column_names) == set(hive_column_names):
    print("Column names match between PostgreSQL and Hive tables.")
 else:
    print("Column names do not match between PostgreSQL and Hive tables.")
+
+# if set(postgres_column_names) == set(hive_column_names):
+#    print("Column names match between PostgreSQL and Hive tables.")
+# else:
+#    print("Column names do not match between PostgreSQL and Hive tables.")
 
 
 # Check for data type mismatches
