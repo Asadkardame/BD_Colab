@@ -39,6 +39,12 @@ try:
     missing_values_specific_columns = df.select([count(when(isnull(c), c)).alias(c) for c in columns_to_check_null]).collect()[0]
     print("Missing Values in Specific Columns:", missing_values_specific_columns)
 
+    negative_age_count = df.filter(df["age"] < 0).count()
+    if negative_age_count > 0:
+        print("Data contains", negative_age_count, "rows with negative values in the 'age' column.")
+    else:
+        print("No negative values found in the 'age' column.")
+
     # Check for data types in specific columns
     columns_to_check_data_type = {'PEOPLE_ID': 'string'}
     incorrect_data_types = [(col_name, actual_type) for col_name, actual_type in df.dtypes if col_name in columns_to_check_data_type and actual_type != columns_to_check_data_type[col_name]]
