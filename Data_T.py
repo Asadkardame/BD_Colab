@@ -22,7 +22,7 @@ class TestFullDataLoading(unittest.TestCase):
             "password": "WelcomeItc@2022",
             "driver": "org.postgresql.Driver",
         }
-        postgres_table_name = "people2"
+        postgres_table_name = "people"
         df_postgres = self.spark.read.jdbc(url=postgres_url, table=postgres_table_name, properties=postgres_properties)
         
         # Rename columns to match Hive column names
