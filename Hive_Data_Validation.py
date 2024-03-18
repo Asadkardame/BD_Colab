@@ -1,65 +1,73 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import count, isnull, when
 
-# Initialize SparkSession
-spark = SparkSession.builder \
-    .appName("Incremental Data Validation") \
-    .enableHiveSupport() \
-    .getOrCreate()
-# Configure JDBC connection properties
-postgres_url = "jdbc:postgresql://ec2-3-9-191-104.eu-west-2.compute.amazonaws.com:5432/testdb"
-postgres_properties = {
-    "user": "consultants",
-    "password": "WelcomeItc@2022",
-    "driver": "org.postgresql.Driver",
-}
+try:
+    # Initialize SparkSession
+    spark = SparkSession.builder \
+        .appName("Hive Data Validation") \
+        .enableHiveSupport() \
+        .getOrCreate()
 
-# # Read new data from data source into a DataFrame (e.g., PostgreSQL)
-# new_data_df = spark.read.jdbc(postgres_url, "select * from car_insurance_claims", properties=postgres_properties)
+    print("SparkSession initialized successfully.")
 
-# Read new data from data source into a DataFrame (e.g., PostgreSQL)
-new_data_df = spark.read.jdbc(url=postgres_url, table="(select * from car_insurance_claims) as tmp", properties=postgres_properties)
+    # Hive table name
+    hive_table_name = "usukprjdb.people"
 
-# Read existing data from Hive table into a DataFrame
-existing_data_df = spark.table("project1db.carinsuranceclaims")
+    # Read data from Hive into a DataFrame
+    df = spark.table(hive_table_name)
 
+    print("Data loaded from Hive table.")
 
-# Read existing data from Hive table into a DataFrame
-existing_data_df = spark.table("project1db.carinsuranceclaims")
+    # Data Validation Checks
+    # Check for missing values
+    missing_values = df.select([count(when(isnull(c), c)).alias(c) for c in df.columns]).collect()[0]
+    print("Missing Values:", missing_values)
 
-# Data Validation Checks
-# 1. Check for missing values in new data
-new_missing_values = new_data_df.select([count(when(isnull(c), c)).alias(c) for c in new_data_df.columns]).collect()[0]
-print("Missing Values in New Data:", new_missing_values)
+    # Check for data types
+    data_types = df.dtypes
+    print("Data Types:", data_types)
 
-# 2. Check for missing values in existing data
-existing_missing_values = existing_data_df.select([count(when(isnull(c), c)).alias(c) for c in existing_data_df.columns]).collect()[0]
-print("Missing Values in Existing Data:", existing_missing_values)
+    # Check for missing values in specific columns
+    columns_to_check_null = ['occupation']
+    missing_values_specific_columns = df.select([count(when(isnull(c), c)).alias(c) for c in columns_to_check_null]).collect()[0]
+    print("Missing Values in Specific Columns:", missing_values_specific_columns)
 
-# # 3. Check for duplicate rows in new data
-# new_unique_rows = new_data_df.distinct().count()
-# new_total_rows = new_data_df.count()
-# if new_unique_rows != new_total_rows:
-#     print("New Data contains duplicate rows.")
+    # Check for negative age values
+    negative_age_count = df.filter(df["current_age"] < 0).count()
+    if negative_age_count > 0:
+        print("Data contains", negative_age_count, "rows with negative values in the 'current_age' column.")
+    else:
+        print("No negative values found in the 'current_age' column.")
 
-# # 4. Check for duplicate rows in existing data
-# existing_unique_rows = existing_data_df.distinct().count()
-# existing_total_rows = existing_data_df.count()
-# if existing_unique_rows != existing_total_rows:
-#     print("Existing Data contains duplicate rows.", existing_unique_rows)
+    # Check for data types in specific columns
+    columns_to_check_data_type = {'people_id': 'string'}
+    incorrect_data_types = [(col_name, actual_type) for col_name, actual_type in df.dtypes if col_name.lower() in columns_to_check_data_type and actual_type != columns_to_check_data_type[col_name.lower()]]
+    print("Incorrect Data Types in Specific Columns:", incorrect_data_types)
 
-new_duplicates = new_data_df.exceptAll(existing_data_df)
-if new_duplicates.count() > 0:
-    print("Duplicate rows in New Data:")
-    new_duplicates.show()
+    # Check for unique values in specific columns
+    columns_to_check_uniqueness = ['people_id']
+    unique_values_specific_columns = {col_name: df.select(col_name).distinct().count() for col_name in columns_to_check_uniqueness}
+    print("Unique Values in Specific Columns:", unique_values_specific_columns)
 
-# 4. Check for duplicate rows in existing data
-existing_duplicates = existing_data_df.exceptAll(new_data_df)
-if existing_duplicates.count() > 0:
-    print("Duplicate rows in Existing Data:")
-    existing_duplicates.show()
+    # Check for uniqueness
+    unique_rows = df.distinct().count()
+    total_rows = df.count()
+    if unique_rows != total_rows:
+        print("Data contains duplicate rows.")
+    else:
+        print("Data does not contain duplicate rows.")
 
-# Additional validation checks can be added as needed
+    # Check primary key constraint
+    primary_key_check = df.select("people_id").distinct().count()
+    if primary_key_check != total_rows:
+        print("Primary key constraint violated for field people_id. Duplicate values found.")
+    else:
+        print("Primary key constraint satisfied for field people_id. All values are unique.")
 
-# Stop SparkSession
-spark.stop()
+except Exception as e:
+    print("Error:", e)
+
+finally:
+    # Stop SparkSession
+    spark.stop()
+    print("SparkSession stopped.")
