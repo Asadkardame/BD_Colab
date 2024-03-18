@@ -39,7 +39,7 @@ try:
     missing_values_specific_columns = df.select([count(when(isnull(c), c)).alias(c) for c in columns_to_check_null]).collect()[0]
     print("Missing Values in Specific Columns:", missing_values_specific_columns)
 
-    negative_age_count = df.filter(df["age"] < 0).count()
+    negative_age_count = df.filter(df["CURRENT_AGE"] < 0).count()
     if negative_age_count > 0:
         print("Data contains", negative_age_count, "rows with negative values in the 'age' column.")
     else:
