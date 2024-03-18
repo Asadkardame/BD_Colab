@@ -9,11 +9,11 @@ spark = SparkSession.builder \
 
 # Read data from PostgreSQL
 postgres_url = "jdbc:postgresql://ec2-3-9-191-104.eu-west-2.compute.amazonaws.com:5432/testdb"
-        postgres_properties = {
-            "user": "consultants",
-            "password": "WelcomeItc@2022",
-            "driver": "org.postgresql.Driver",
-        }
+postgres_properties = {
+    "user": "consultants",
+    "password": "WelcomeItc@2022",
+    "driver": "org.postgresql.Driver",
+}
 
 # Read data from Hive
 hive_df = spark.sql("SELECT * FROM usukprjdb.people")
