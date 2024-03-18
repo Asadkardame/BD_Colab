@@ -7,7 +7,7 @@ spark = SparkSession.builder \
     .getOrCreate()
 
 # Define PostgreSQL table and Hive table names
-postgres_table_name = "people"
+postgres_table_name = "people2"
 hive_table_name = "usukprjdb.people"
 
 # # Retrieve PostgreSQL table schema
