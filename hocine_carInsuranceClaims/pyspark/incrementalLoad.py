@@ -22,7 +22,7 @@ hive_database_name = "project1db"
 hive_table_name = "carinsuranceclaims"
 
 
-# 2. read & show new dataset from PostgresSQL:
+# 2. read data from postgres table into dataframe :
 postgres_df = spark.read.jdbc(url=postgres_url, table=postgres_table_name, properties=postgres_properties)
 postgres_df.show(3)
 

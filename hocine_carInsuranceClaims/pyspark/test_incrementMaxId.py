@@ -43,7 +43,7 @@ more_data.printSchema()
 # Register the DataFrame as a temporary view
 more_data.createOrReplaceTempView("my_car_insurance_claims")
 # Run a SQL query on the DataFrame
-query = 'SELECT * FROM my_car_insurance_claims WHERE POLICY_NUMBER > ' + str(m_id)
+query = 'SELECT * FROM my_car_insurance_claims WHERE POLICY_NUMBER > ' + m_id
 new_records = spark.sql(query)
 
 print('------------------COUNTING INCREMENT RECORDS ------------')
