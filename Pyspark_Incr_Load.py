@@ -15,13 +15,13 @@ class TestIncrDataLoading(unittest.TestCase):
         self.spark.stop()
 
     def test_Incr_Load(self):  # Make sure your test method begins with "test"
-        # Read initial count of rows from Hive table
-        hive_database_name = "usukprjdb"
-        hive_table_name = "people"
-        initial_count_df = self.spark.sql("SELECT COUNT(*) AS count FROM usukprjdb.people")
+        # # Read initial count of rows from Hive table
+        # hive_database_name = "usukprjdb"
+        # hive_table_name = "people"
+        # initial_count_df = self.spark.sql("SELECT COUNT(*) AS count FROM usukprjdb.people")
 
-        initial_count = initial_count_df.collect()[0]["count"]
-        print("Initial_count:", initial_count)
+        # initial_count = initial_count_df.collect()[0]["count"]
+        # print("Initial_count:", initial_count)
 
         # Read data from PostgreSQL
         postgres_url = "jdbc:postgresql://ec2-3-9-191-104.eu-west-2.compute.amazonaws.com:5432/testdb"
