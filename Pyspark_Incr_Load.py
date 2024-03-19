@@ -32,8 +32,9 @@ class TestIncrDataLoading(unittest.TestCase):
         PostGresData.show()
         postgres_count = PostGresData.count()
 
-        # Read count of rows from Hive table after applying the WHERE condition
-        Hive_count_df = self.spark.sql("SELECT COUNT(*) AS count FROM usukprjdb.people")
+       # Read count of rows from Hive table after applying the WHERE condition
+        hive_where_condition = "people_id > 14"
+        Hive_count_df = self.spark.sql(f"SELECT COUNT(*) AS count FROM usukprjdb.people WHERE {hive_where_condition}")
         Hive_count = Hive_count_df.collect()[0]["count"]
 
         # Print updated count
