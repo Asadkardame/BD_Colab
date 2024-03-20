@@ -7,7 +7,7 @@ spark = SparkSession.builder \
     .getOrCreate()
 
 # Define PostgreSQL table and Hive table names
-postgres_table_name = "people2"
+postgres_table_name = "people"
 hive_table_name = "usukprjdb.people"
 
 # # Retrieve PostgreSQL table schema
@@ -20,7 +20,7 @@ hive_table_name = "usukprjdb.people"
 
 postgres_df = spark.read.format("jdbc") \
     .option("url", "jdbc:postgresql://ec2-3-9-191-104.eu-west-2.compute.amazonaws.com:5432/testdb") \
-    .option("dbtable", "people2") \
+    .option("dbtable", "people") \
     .option("user", "consultants") \
     .option("password", "WelcomeItc@2022") \
     .option("driver", "org.postgresql.Driver") \
