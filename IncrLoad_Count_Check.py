@@ -46,7 +46,6 @@ class TestIncrDataLoading(unittest.TestCase):
             print('Postgres_Count', postgres_count)
             print('Hive_count', Hive_count)
         else:
-            print("Number of rows loaded to Hive matches the expected count")
             print('Postgres_Count', postgres_count)
             print('Hive_count', Hive_count)
             self.assertEqual(Hive_count, postgres_count, "Number of rows loaded to Hive does not match expected count")
